@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { BookStack, Cap, Paw, Shoe, SittingCat, Sunflower } from "../components/illustrations";
+import { BookStack, Cap, MusicNote, Paw, Pencil, Shoe, SittingCat, Sunflower } from "../components/illustrations";
 import { site } from "../data/content";
 import { resolveNamed } from "../lib/photos";
 
@@ -27,10 +27,51 @@ const notes = [
   },
 ];
 
-const memoryShots = [
-  { names: ["photo-1", "photo_1"], caption: "Lakhoti" },
-  { names: ["photo-2", "photo_2"], caption: "Chaddi-Baddi" },
-  { names: ["photo-3", "photo_3"], caption: "kept this one" },
+const memories = [
+  {
+    id: "dramebaaz",
+    title: "the dramebaaz side",
+    stamp: "Oscar-worthy performance",
+    paragraphs: [
+      "Remember when you moved to that place on Holyake Crescent? The house was horrible, and there were Punjabi guys living there. You called Harsh and started your nautanki to convince him.",
+      "You seemed to be crying. You were acting. You were so convincing that even I got scared.",
+    ],
+  },
+  {
+    id: "padhaku",
+    title: "the padhaku side",
+    paragraphs: [
+      "Assignments, deadlines, quizzes, exams. All of it at once. So you stayed awake the entire night and finished it.",
+      "The next morning, the dark circles were right there. The work, I get. Sleep was not optional, madam.",
+    ],
+  },
+  {
+    id: "childish",
+    title: "the childish side",
+    quote: "Pani Puri",
+    paragraphs: [
+      "After your favourite Pani Puri, we were recording a vlog, and then you said “Pani Puri.” I don’t know what it was about that one second. It came out so sweet. Proper childish.",
+      "Imagine being that happy about Pani Puri. Fair enough. I get it.",
+    ],
+  },
+  {
+    id: "angry",
+    title: "the angry woman side",
+    stamp: "Case reopened: Birthday 2024",
+    paragraphs: [
+      "Your birthday in 2024. Harsh made a comment, mentioned my name, and somehow I was in it.",
+      "You were furious with me. I still remember how angry you were. One comment, my name, and the birthday came with a side of that.",
+    ],
+  },
+  {
+    id: "singer",
+    title: "the singer side",
+    stamp: "100% confidence, 0% accuracy",
+    paragraphs: [
+      "After we bought the water filter, you sang “Brown Munde.” The lyrics were wrong. The confidence was not.",
+      "I’ve heard a lot of songs. Not one of them was Brown Munde, sung like that. Your version was funnier. Don’t fix it.",
+    ],
+  },
 ];
 
 function doodleFor(kind) {
@@ -120,67 +161,68 @@ export default function About() {
         </div>
       </section>
 
-      <section className="mt-16 max-w-2xl" aria-labelledby="memories">
+      <section className="about-memories" aria-labelledby="memories">
         <h2 id="memories" className="font-hand text-4xl leading-none text-ink sm:text-5xl">
           a few memories
         </h2>
-        <div className="mt-4 space-y-4 text-[1.05rem] leading-relaxed text-ink sm:text-lg">
-          <p>
-            We have had the silly fights. We have also had the quieter stretches, where nobody was really talking, and that part was worse than the fights.
-          </p>
-          <p>
-            Then one day we were Chaddi-Baddi again. I still do not have a tidy explanation. I am just glad that is the version that stuck.
-          </p>
+        <div className="about-memory-list">
+          {memories.map((memory, index) => (
+            <motion.article
+              key={memory.id}
+              className={`about-memory about-memory-${memory.id}`}
+              initial={reduce ? false : { opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-30px" }}
+              transition={{ ...fade, delay: reduce ? 0 : (index % 2) * 0.04 }}
+            >
+              <MemoryMark id={memory.id} />
+              <h3 className="font-hand text-4xl leading-none text-paper-ink">{memory.title}</h3>
+              {memory.quote && <p className="about-quote">{memory.quote}</p>}
+              {memory.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="about-memory-copy">{paragraph}</p>
+              ))}
+              {memory.stamp && <p className="about-stamp">{memory.stamp}</p>}
+            </motion.article>
+          ))}
         </div>
-        <MemoryPhotos />
       </section>
 
-      <section className="mt-16 max-w-2xl" aria-labelledby="serious">
-        <h2 id="serious" className="font-hand text-4xl leading-none text-ink sm:text-5xl">
-          the serious side, for a second
-        </h2>
-        <div className="scrap mt-5 max-w-xl rounded-[1.4rem] px-5 py-5 sm:px-6">
-          <div className="space-y-3 text-[1.05rem] leading-relaxed text-paper-ink sm:text-lg">
+      <section className="about-serious" aria-labelledby="serious">
+        <Sunflower className="h-16 w-auto" />
+        <div>
+          <h2 id="serious" className="font-hand text-4xl leading-none text-ink sm:text-5xl">
+            the serious side, for a second
+          </h2>
+          <div className="about-serious-paper">
+            <p>Jokes apart. I know you actually want to be an Architect.</p>
             <p>
-              She actually wants to do architecture. Not just talk about it.
+              College, work, assignments, exams, and the rest of what you fit into a day. That is a lot. I’m proud of the effort. I hope it gets you a good-paying job in your field, and the future you want.
             </p>
             <p>
-              College, work, studying, all of it at the same time. I am proud of her. I want her to get the things she is aiming at.
+              Also, my future house is already your responsibility. I want one slightly ridiculous window, and a proper place for the shoes you are definitely going to judge. You can take your time replying. You usually do. No pressure.
             </p>
           </div>
-        </div>
-      </section>
-
-      <section className="about-close" aria-label="Closing">
-        <Sunflower className="h-16 w-auto" />
-        <div className="max-w-xl space-y-3 text-[1.05rem] leading-relaxed text-ink sm:text-lg">
-          <p>
-            She has also been told that my future house is her problem. I want one slightly ridiculous window, and a place for the shoes she will definitely judge. She can answer whenever. I am used to the wait.
-          </p>
-          <p className="font-hand text-4xl leading-none text-ink">Still Chaddi-Baddi, though.</p>
+          <p className="about-signoff">Still Chaddi-Baddi, though.</p>
         </div>
       </section>
     </article>
   );
 }
 
-function MemoryPhotos() {
-  const shots = memoryShots
-    .map((shot) => ({ ...shot, src: resolveNamed(shot.names) }))
-    .filter((shot) => shot.src);
-
-  if (shots.length === 0) return null;
-
-  return (
-    <div className="mt-8 flex flex-wrap items-start gap-8">
-      {shots.map((shot, index) => (
-        <FoundPhoto
-          key={shot.caption}
-          names={shot.names}
-          caption={shot.caption}
-          tilt={index % 2 === 0 ? "sm:-rotate-2" : "sm:rotate-2"}
-        />
-      ))}
-    </div>
-  );
+function MemoryMark({ id }) {
+  if (id === "padhaku") {
+    return (
+      <span className="about-mark-wrap" aria-hidden="true">
+        <Pencil className="about-mark" />
+      </span>
+    );
+  }
+  if (id === "singer") {
+    return (
+      <span className="about-mark-wrap" aria-hidden="true">
+        <MusicNote className="about-mark about-mark-note" />
+      </span>
+    );
+  }
+  return null;
 }
