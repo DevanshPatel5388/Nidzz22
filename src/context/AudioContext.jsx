@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { createPiano } from "../lib/piano";
+import { trackAvailable } from "../lib/soundtrack";
 
 const AudioContext = createContext(null);
 
@@ -26,7 +27,10 @@ export function AudioProvider({ children }) {
     const piano = engine.current;
 
     async function sync() {
-      if (enabled && location.pathname === "/surprise") {
+      if (trackAvailable()) {
+        piano.stop();
+        if (!cancel) setBlocked(false);
+      } else if (enabled && location.pathname === "/surprise") {
         const ok = await piano.start();
         if (!cancel) setBlocked(!ok);
       } else {
@@ -53,7 +57,7 @@ export function AudioProvider({ children }) {
           return;
         }
         setEnabled(true);
-        if (location.pathname === "/surprise") {
+        if (!trackAvailable() && location.pathname === "/surprise") {
           const ok = await engine.current.start();
           setBlocked(!ok);
         }

@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
+import { useSoundtrack } from "../context/SoundtrackContext";
 import { site } from "../data/content";
 import FallingPetals from "../components/FallingPetals";
 import ThemeToggle from "../components/ThemeToggle";
@@ -30,6 +31,7 @@ function birthdayNote() {
 
 export default function Landing() {
   const note = useMemo(() => birthdayNote(), []);
+  const { begin } = useSoundtrack();
 
   return (
     <section className="sky relative flex min-h-[100svh] items-center justify-center overflow-hidden px-5 py-16">
@@ -81,6 +83,7 @@ export default function Landing() {
         </p>
         <Link
           to="/home"
+          onClick={begin}
           className="book-btn lift mt-8 inline-flex items-center justify-center rounded-[2rem] bg-paper px-6 py-4 font-hand text-[2rem] leading-none text-paper-ink sm:px-8 sm:text-4xl"
         >
           Open Your Birthday Book

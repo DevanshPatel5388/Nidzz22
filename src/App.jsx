@@ -2,8 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AudioProvider } from "./context/AudioContext";
+import { SoundtrackProvider } from "./context/SoundtrackContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import LoadingScreen from "./components/LoadingScreen";
+import MusicControl from "./components/MusicControl";
 import Navigation from "./components/Navigation";
 import { pages, site } from "./data/content";
 import About from "./pages/About";
@@ -81,10 +83,13 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <AudioProvider>
-        <Book />
-        <AnimatePresence>{loading && <LoadingScreen key="loading" onDone={finish} />}</AnimatePresence>
-      </AudioProvider>
+      <SoundtrackProvider>
+        <AudioProvider>
+          <Book />
+          <MusicControl />
+          <AnimatePresence>{loading && <LoadingScreen key="loading" onDone={finish} />}</AnimatePresence>
+        </AudioProvider>
+      </SoundtrackProvider>
     </ThemeProvider>
   );
 }

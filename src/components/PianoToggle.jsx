@@ -1,8 +1,10 @@
 import { useAudio } from "../context/AudioContext";
+import { trackAvailable } from "../lib/soundtrack";
 import { MusicNote } from "./illustrations";
 
 export default function PianoToggle({ compact = false }) {
   const { enabled, blocked, toggle } = useAudio();
+  if (trackAvailable()) return null;
   const label = blocked ? "Tap for piano" : enabled ? "Piano on" : "Soft piano";
 
   if (compact) {
