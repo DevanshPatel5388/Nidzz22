@@ -1,0 +1,21 @@
+Drop your pictures in this folder. The website picks them up automatically.
+
+Gallery
+  photo-1.jpg
+  photo-2.jpg
+  photo-3.jpg
+  photo-4.jpg
+  photo-5.jpg
+  photo-6.jpg
+
+Also works: photo_1.png, PHOTO-1.webp, and the same idea through photo 6.
+jpg, jpeg, png, webp, gif, and avif are all fine.
+
+Portrait on the About page
+  portrait.jpg
+
+Captions, her name, and the memory notes live in:
+  src/data/content.js
+
+Change site.name there. It appears on the final page as
+"Happy Birthday, [name]".
