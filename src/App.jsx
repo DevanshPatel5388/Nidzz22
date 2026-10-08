@@ -4,7 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { AudioProvider } from "./context/AudioContext";
 import { SoundtrackProvider } from "./context/SoundtrackContext";
 import { ThemeProvider } from "./context/ThemeContext";
-import LoadingScreen from "./components/LoadingScreen";
+import CakeIntro from "./components/CakeIntro";
 import MusicControl from "./components/MusicControl";
 import Navigation from "./components/Navigation";
 import { pages, site } from "./data/content";
@@ -87,7 +87,7 @@ export default function App() {
         <AudioProvider>
           <Book />
           <MusicControl />
-          <AnimatePresence>{loading && <LoadingScreen key="loading" onDone={finish} />}</AnimatePresence>
+          <AnimatePresence>{loading && <CakeIntro key="cake" onDone={finish} />}</AnimatePresence>
         </AudioProvider>
       </SoundtrackProvider>
     </ThemeProvider>
