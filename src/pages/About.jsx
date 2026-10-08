@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { BookStack, Cap, MusicNote, Paw, Pencil, Shoe, SittingCat, Sunflower } from "../components/illustrations";
 import { site } from "../data/content";
@@ -161,31 +161,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="about-memories" aria-labelledby="memories">
-        <h2 id="memories" className="font-hand text-4xl leading-none text-ink sm:text-5xl">
-          a few memories
-        </h2>
-        <div className="about-memory-list">
-          {memories.map((memory, index) => (
-            <motion.article
-              key={memory.id}
-              className={`about-memory about-memory-${memory.id}`}
-              initial={reduce ? false : { opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-30px" }}
-              transition={{ ...fade, delay: reduce ? 0 : (index % 2) * 0.04 }}
-            >
-              <MemoryMark id={memory.id} />
-              <h3 className="font-hand text-4xl leading-none text-paper-ink">{memory.title}</h3>
-              {memory.quote && <p className="about-quote">{memory.quote}</p>}
-              {memory.paragraphs.map((paragraph) => (
-                <p key={paragraph} className="about-memory-copy">{paragraph}</p>
-              ))}
-              {memory.stamp && <p className="about-stamp">{memory.stamp}</p>}
-            </motion.article>
-          ))}
-        </div>
-      </section>
+      <MemoryDeck reduce={reduce} fade={fade} />
 
       <section className="about-serious" aria-labelledby="serious">
         <Sunflower className="h-16 w-auto" />
@@ -207,6 +183,220 @@ export default function About() {
       </section>
     </article>
   );
+}
+
+const noteEase = [0.22, 1, 0.36, 1];
+
+function MemoryDeck({ reduce, fade }) {
+  const total = memories.length;
+  const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(1);
+  const [busy, setBusy] = useState(false);
+  const [hasMoved, setHasMoved] = useState(false);
+  const [leaving, setLeaving] = useState(null);
+  const [stageHeight, setStageHeight] = useState(null);
+  const lock = useRef(false);
+  const turn = useRef(0);
+  const interacted = useRef(false);
+  const cueRef = useRef(null);
+  const endRef = useRef(null);
+  const setHeight = useCallback((next) => {
+    setStageHeight((current) => (current === next ? current : next));
+  }, []);
+  const memory = memories[index];
+  const isLast = index === total - 1;
+
+  function go(nextIndex) {
+    if (lock.current || nextIndex === index || nextIndex < 0 || nextIndex >= total) return;
+    lock.current = true;
+    const ticket = ++turn.current;
+    const dir = nextIndex > index ? 1 : -1;
+    interacted.current = true;
+    setBusy(true);
+    setHasMoved(true);
+    setDirection(dir);
+    if (!reduce) {
+      setLeaving({
+        memory: memories[index],
+        dir,
+        cueLabel: index === total - 1
+          ? null
+          : index === 0
+            ? "Click to reveal the next memory"
+            : "Open the next memory",
+      });
+    }
+    setIndex(nextIndex);
+    window.setTimeout(() => {
+      if (turn.current !== ticket) return;
+      setLeaving(null);
+      lock.current = false;
+      setBusy(false);
+    }, reduce ? 0 : 460);
+  }
+
+  useEffect(() => {
+    if (!interacted.current) return;
+    const node = isLast ? endRef.current : cueRef.current;
+    node?.focus({ preventScroll: true });
+  }, [index, isLast]);
+
+  function onKeyDown(event) {
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      go(index + 1);
+    } else if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      go(index - 1);
+    }
+  }
+
+  return (
+    <section className="about-memories" aria-labelledby="memories" onKeyDown={onKeyDown}>
+      <h2 id="memories" className="font-hand text-4xl leading-none text-ink sm:text-5xl">
+        a few memories
+      </h2>
+      <motion.div
+        className="about-deck"
+        initial={reduce ? false : { opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={fade}
+      >
+        <p className="about-deck-count">Memory {index + 1} of {total}</p>
+        <p className="about-deck-live" aria-live="polite">
+          {memory.title}. Memory {index + 1} of {total}.
+          {isLast ? " And these are just a few of our memories." : ""}
+        </p>
+        <div
+          className="about-deck-stage"
+          style={stageHeight ? { height: stageHeight } : undefined}
+        >
+          <span className="about-deck-sheet about-deck-sheet-back" aria-hidden="true" />
+          <span className="about-deck-sheet" aria-hidden="true" />
+          {leaving && (
+            <motion.article
+              key={`leave-${leaving.memory.id}`}
+              className={`about-memory about-memory-${leaving.memory.id} is-leaving`}
+              aria-hidden="true"
+              initial={{ opacity: 1, x: 0, rotate: 0, y: 0 }}
+              animate={{
+                opacity: 0,
+                x: leaving.dir > 0 ? -46 : 46,
+                rotate: leaving.dir > 0 ? -1.5 : 1.5,
+                y: -6,
+              }}
+              transition={{ duration: 0.42, ease: noteEase }}
+            >
+              <MemoryBody
+                memory={leaving.memory}
+                cue={leaving.cueLabel ? "ghost" : null}
+                cueLabel={leaving.cueLabel}
+              />
+            </motion.article>
+          )}
+          <motion.article
+            key={memory.id}
+            className={`about-memory about-memory-${memory.id} is-current${isLast ? "" : " is-openable"}`}
+            aria-labelledby={`memory-${memory.id}`}
+            initial={reduce || !hasMoved ? false : {
+              opacity: 0,
+              x: direction > 0 ? 42 : -42,
+              rotate: direction > 0 ? 1.4 : -1.4,
+              y: 12,
+            }}
+            animate={{ opacity: 1, x: 0, rotate: 0, y: 0 }}
+            transition={reduce ? { duration: 0 } : { duration: 0.45, ease: noteEase }}
+            onClick={(event) => {
+              if (isLast || event.target.closest("button")) return;
+              go(index + 1);
+            }}
+          >
+            <MemoryBody
+              memory={memory}
+              cue={isLast ? null : "button"}
+              cueLabel={index === 0 ? "Click to reveal the next memory" : "Open the next memory"}
+              cueRef={cueRef}
+              busy={busy}
+              onOpen={() => go(index + 1)}
+              onHeight={setHeight}
+            />
+          </motion.article>
+        </div>
+        <div className="about-deck-nav">
+          <button type="button" onClick={() => go(index - 1)} disabled={busy || index === 0}>
+            Previous memory
+          </button>
+          {isLast ? (
+            <motion.p
+              ref={endRef}
+              tabIndex={-1}
+              className="about-deck-end"
+              initial={reduce ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={reduce ? { duration: 0 } : { duration: 0.4, delay: 0.12 }}
+            >
+              And these are just a few of our memories ❤️
+            </motion.p>
+          ) : (
+            <button type="button" onClick={() => go(index + 1)} disabled={busy}>
+              Next memory
+            </button>
+          )}
+        </div>
+      </motion.div>
+    </section>
+  );
+}
+
+function MemoryBody({ memory, cue, cueLabel, cueRef, busy, onOpen, onHeight }) {
+  const body = (
+    <>
+      <MemoryMark id={memory.id} />
+      <h3
+        id={cue === "ghost" ? undefined : `memory-${memory.id}`}
+        className="font-hand text-4xl leading-none text-paper-ink"
+      >
+        {memory.title}
+      </h3>
+      {memory.quote && <p className="about-quote">{memory.quote}</p>}
+      {memory.paragraphs.map((paragraph) => (
+        <p key={paragraph} className="about-memory-copy">{paragraph}</p>
+      ))}
+      {memory.stamp && <p className="about-stamp">{memory.stamp}</p>}
+      {cue === "button" && (
+        <button
+          ref={cueRef}
+          type="button"
+          className="about-deck-cue"
+          onClick={onOpen}
+          disabled={busy}
+        >
+          {cueLabel}
+        </button>
+      )}
+      {cue === "ghost" && <p className="about-deck-cue">{cueLabel}</p>}
+    </>
+  );
+
+  if (!onHeight) return body;
+  return <NoteFrame onHeight={onHeight}>{body}</NoteFrame>;
+}
+
+function NoteFrame({ onHeight, children }) {
+  const ref = useRef(null);
+
+  useLayoutEffect(() => {
+    const node = ref.current?.parentElement;
+    if (!node) return undefined;
+    const measure = () => onHeight(node.offsetHeight + 8);
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [onHeight]);
+
+  return <div ref={ref}>{children}</div>;
 }
 
 function MemoryMark({ id }) {

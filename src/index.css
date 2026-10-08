@@ -702,11 +702,137 @@ body:has(.music-dock) #content {
   margin-top: 4rem;
 }
 
-.about-memory-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.35rem;
+.about-deck {
+  position: relative;
+  max-width: 40rem;
   margin-top: 1.35rem;
+}
+
+.about-deck-count {
+  margin: 0 0 0.7rem;
+  font-family: var(--font-hand);
+  font-size: 1.65rem;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.about-deck-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.about-deck-stage {
+  position: relative;
+  width: min(100%, 38rem);
+  min-height: 17rem;
+  overflow: hidden;
+  transition: height 0.35s ease;
+}
+
+.about-deck-sheet {
+  position: absolute;
+  z-index: 0;
+  inset: 0.85rem 0.55rem 0.15rem 0.35rem;
+  border-radius: 3px 14px 5px 12px;
+  background: #f4eadc;
+  transform: rotate(1.5deg);
+  pointer-events: none;
+}
+
+.about-deck-sheet-back {
+  inset: 1.05rem 0.85rem 0 0.7rem;
+  background: #efe4d4;
+  transform: rotate(-1.7deg);
+}
+
+.about-deck-stage .about-memory {
+  position: absolute;
+  z-index: 1;
+  top: 0.15rem;
+  left: 0;
+  right: 0;
+  width: auto;
+}
+
+.about-deck-stage .about-memory.is-current {
+  z-index: 2;
+}
+
+.about-deck-stage .about-memory.is-leaving {
+  pointer-events: none;
+}
+
+.about-memory.is-openable {
+  cursor: pointer;
+}
+
+.about-deck-cue {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 44px;
+  margin-top: 1.15rem;
+  padding: 0.15rem 0;
+  border: 0;
+  border-bottom: 1px dashed rgba(122, 78, 46, 0.45);
+  background: transparent;
+  color: var(--paper-ink);
+  font-family: var(--font-hand);
+  font-size: 1.45rem;
+  line-height: 1.1;
+  text-align: left;
+  cursor: pointer;
+}
+
+.about-deck-cue:disabled {
+  cursor: default;
+}
+
+.about-deck-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 1.35rem;
+  width: min(100%, 38rem);
+  margin-top: 0.85rem;
+}
+
+.about-deck-nav button {
+  min-height: 44px;
+  padding: 0.35rem 0.1rem;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.about-deck-nav button:disabled {
+  opacity: 0.38;
+  cursor: default;
+}
+
+.about-deck-end {
+  margin: 0;
+  flex: 1 1 14rem;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.about-deck-end:focus {
+  outline: none;
 }
 
 .about-memory {
@@ -778,7 +904,8 @@ body:has(.music-dock) #content {
 }
 
 .about-stamp {
-  display: inline-block;
+  display: block;
+  width: fit-content;
   margin: 0.9rem 0 0;
   padding: 0.05rem 0.65rem;
   border: 1.5px solid var(--blush-deep);
@@ -842,20 +969,14 @@ body:has(.music-dock) #content {
   color: var(--ink);
 }
 
-@media (min-width: 800px) {
-  .about-memory-dramebaaz { transform: rotate(-0.7deg); }
-  .about-memory-padhaku { margin-left: 2.5rem; }
-  .about-memory-childish { transform: rotate(0.6deg); }
-  .about-memory-angry { margin-left: 1.25rem; }
-  .about-memory-singer { transform: rotate(-0.4deg); }
-}
-
 @media (max-width: 639px) {
   .about-serious { flex-direction: column; gap: 0.4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+
+  .about-deck-stage { transition: none; }
 
   .sky,
   .floaty,
