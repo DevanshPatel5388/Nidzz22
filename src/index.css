@@ -643,6 +643,69 @@ body:has(.music-dock) #content {
   to { transform: rotate(360deg); }
 }
 
+.about-journal {
+  width: min(100% - 2rem, 68rem);
+  margin-inline: auto;
+  padding: 2.75rem 0 3.5rem;
+}
+
+.about-open {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.75rem;
+  align-items: start;
+}
+
+.about-open:has(.about-portrait) {
+  justify-items: start;
+}
+
+@media (min-width: 768px) {
+  .about-open:has(.about-portrait) {
+    grid-template-columns: 16rem minmax(0, 36rem);
+    gap: 2.25rem;
+  }
+}
+
+.about-scatter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1.35rem 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.about-note {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  border-radius: 2px 12px 4px 10px;
+  padding: 1.15rem 1rem 0.95rem;
+}
+
+.about-note:nth-child(1) { max-width: 28rem; }
+.about-note:nth-child(2) { max-width: 24rem; }
+.about-note:nth-child(3) { max-width: 32rem; }
+.about-note:nth-child(4) { max-width: 26rem; }
+
+@media (min-width: 800px) {
+  .about-scatter {
+    margin-top: 2rem;
+  }
+
+  .about-note:nth-child(2) { margin-top: 2.25rem; }
+  .about-note:nth-child(3) { margin-left: 2.5rem; }
+  .about-note:nth-child(4) { margin-top: 0.5rem; }
+}
+
+.about-close {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  margin-top: 3.25rem;
+  max-width: 40rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 
