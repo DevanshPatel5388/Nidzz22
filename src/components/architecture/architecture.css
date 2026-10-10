@@ -1,0 +1,1413 @@
+/**
+ * Architecture World — scene styling.
+ *
+ * The page reads as one continuous film, so the sky moves from sunrise at the
+ * top to evening at the bottom. Each scene owns its own backdrop but shares
+ * the site's palette, fonts and spacing tokens.
+ *
+ * Motion lives here rather than in JS wherever a CSS transition or keyframe
+ * can do the job, and the whole file degrades to a static, fully readable
+ * page under `prefers-reduced-motion`.
+ */
+
+.arch-page {
+  --arch-red: #c0463f;
+  --arch-line: rgba(62, 44, 34, 0.35);
+  --arch-ground: #c9bda8;
+  --arch-ink: #2f2a24;
+  --arch-soft: rgba(255, 252, 245, 0.78);
+  --arch-edge: rgba(62, 44, 34, 0.14);
+
+  width: 100%;
+  overflow-x: clip;
+  color: var(--arch-ink);
+}
+
+:root.dark .arch-page {
+  --arch-line: rgba(246, 239, 230, 0.4);
+  --arch-ground: #4a4136;
+  --arch-ink: #f4eee5;
+  --arch-soft: rgba(28, 24, 20, 0.6);
+  --arch-edge: rgba(246, 239, 230, 0.16);
+}
+
+/* ---------------------------------------------------------------- */
+/* Scene shells and skies                                             */
+/* ---------------------------------------------------------------- */
+
+.arch-scene {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 4.5rem 0;
+}
+
+.arch-scene-inner {
+  position: relative;
+  z-index: 2;
+  width: min(100% - 2rem, 68rem);
+  margin-inline: auto;
+}
+
+.arch-scene-dawn {
+  min-height: min(92vh, 780px);
+  display: flex;
+  align-items: center;
+  background: linear-gradient(180deg, #f6c79c 0%, #fadec6 42%, #fbf3e7 100%);
+}
+
+.arch-scene-day {
+  padding-bottom: 0;
+  background: linear-gradient(180deg, #a9d4ee 0%, #cfe7f5 52%, #9bbbd2 100%);
+}
+
+.arch-scene-dusk {
+  padding-bottom: 0;
+  background: linear-gradient(180deg, #9bbbd2 0%, #e9ab7c 58%, #f6d2a8 100%);
+}
+
+/* Dissolve the northern landscape into the next morning's sky. */
+.arch-scene-dusk::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 3;
+  height: 78px;
+  background: linear-gradient(180deg, rgba(220, 236, 246, 0), #dcecf6);
+  pointer-events: none;
+}
+
+:root.dark .arch-scene-dusk::after {
+  background: linear-gradient(180deg, rgba(27, 42, 51, 0), #1b2a33);
+}
+
+.arch-scene-morning {
+  background: linear-gradient(180deg, #dcecf6 0%, #f4efe4 70%, var(--cream) 100%);
+}
+
+.arch-scene-studio {
+  background-color: #f4efe3;
+  background-image:
+    linear-gradient(rgba(70, 110, 140, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(70, 110, 140, 0.09) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.arch-scene-paper {
+  background: var(--cream);
+}
+
+.arch-scene-evening {
+  background: linear-gradient(180deg, #1d2435 0%, #3c3550 46%, #7c5563 100%);
+  color: #f7efe6;
+}
+
+:root.dark .arch-scene-dawn {
+  background: linear-gradient(180deg, #3d2c2a 0%, #2a2220 48%, var(--cream) 100%);
+}
+
+:root.dark .arch-scene-day {
+  background: linear-gradient(180deg, #1c3040 0%, #1d2a33 52%, var(--cream) 100%);
+}
+
+:root.dark .arch-scene-dusk {
+  background: linear-gradient(180deg, #1f3246 0%, #4a3330 58%, #35251f 100%);
+}
+
+:root.dark .arch-scene-morning {
+  background: linear-gradient(180deg, #1b2a33 0%, #1e1915 70%, var(--cream) 100%);
+}
+
+:root.dark .arch-scene-studio {
+  background-color: #1a1612;
+  background-image:
+    linear-gradient(rgba(190, 214, 228, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(190, 214, 228, 0.07) 1px, transparent 1px);
+}
+
+:root.dark .arch-scene-evening {
+  background: linear-gradient(180deg, #11151f 0%, #23202f 46%, #42303a 100%);
+}
+
+/* ---------------------------------------------------------------- */
+/* Typography                                                         */
+/* ---------------------------------------------------------------- */
+
+.arch-eyebrow {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-type);
+  font-size: 0.74rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--sun-deep);
+}
+
+.arch-title {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: clamp(2.9rem, 8.5vw, 5.2rem);
+  font-weight: 600;
+  line-height: 0.92;
+  color: var(--arch-ink);
+  text-wrap: balance;
+}
+
+.arch-heading {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: clamp(2.2rem, 5.6vw, 3.4rem);
+  font-weight: 600;
+  line-height: 1;
+  color: inherit;
+  text-wrap: balance;
+}
+
+.arch-lede,
+.arch-sub {
+  margin: 0.9rem 0 0;
+  max-width: 34rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  font-style: italic;
+  line-height: 1.45;
+  color: inherit;
+  opacity: 0.86;
+}
+
+.arch-scene-copy.is-centred {
+  max-width: 44rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.arch-scene-copy.is-centred .arch-sub {
+  margin-inline: auto;
+}
+
+.arch-flag-emoji {
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- */
+/* Buttons                                                            */
+/* ---------------------------------------------------------------- */
+
+.arch-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.1rem;
+  margin-top: 1.6rem;
+}
+
+.arch-btn {
+  border: 1.5px solid var(--sun-deep);
+  border-radius: 999px;
+  background: var(--paper);
+  padding: 0.6rem 1.5rem;
+  font-family: var(--font-hand);
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--paper-ink);
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(80, 52, 32, 0.14);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.arch-btn:hover {
+  transform: translateY(-2px);
+  background: var(--sun);
+  box-shadow: 0 14px 26px rgba(80, 52, 32, 0.2);
+}
+
+.arch-btn-light {
+  background: rgba(255, 250, 243, 0.92);
+  border-color: rgba(255, 250, 243, 0.9);
+}
+
+.arch-btn-quiet {
+  border: 0;
+  background: none;
+  padding: 0.35rem 0.2rem;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: inherit;
+  opacity: 0.72;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: opacity 0.2s ease;
+}
+
+.arch-btn-quiet:hover {
+  opacity: 1;
+}
+
+/* ---------------------------------------------------------------- */
+/* Atmosphere: sun, clouds, birds, sparkles                           */
+/* ---------------------------------------------------------------- */
+
+.arch-sun {
+  position: absolute;
+  top: 12%;
+  right: 12%;
+  z-index: 0;
+  width: clamp(120px, 22vw, 220px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 232, 176, 0.95) 0%, rgba(246, 199, 140, 0.55) 45%, rgba(246, 199, 140, 0) 72%);
+  animation: arch-glow 9s ease-in-out infinite;
+}
+
+.arch-cloud-layer {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 1;
+  height: 58%;
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+:root.dark .arch-cloud-layer {
+  color: rgba(226, 232, 238, 0.22);
+}
+
+.arch-cloud {
+  position: absolute;
+  display: block;
+  width: 160px;
+  transform: scale(var(--cloud-scale, 1));
+  animation: arch-drift var(--cloud-speed, 80s) linear infinite;
+}
+
+.arch-cloud svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.arch-cloud-a { top: 8%; left: -14%; }
+.arch-cloud-b { top: 26%; left: -28%; animation-delay: -24s; }
+.arch-cloud-c { top: 44%; left: -42%; animation-delay: -52s; }
+
+.arch-bird-layer {
+  position: absolute;
+  inset: 8% 0 auto;
+  z-index: 1;
+  height: 30%;
+  color: rgba(60, 60, 70, 0.6);
+  pointer-events: none;
+}
+
+:root.dark .arch-bird-layer { color: rgba(226, 232, 238, 0.4); }
+
+.arch-bird { position: absolute; width: 28px; }
+.arch-bird-1 { top: 18%; left: 14%; animation: arch-flap 3.2s ease-in-out infinite; }
+.arch-bird-2 { top: 30%; left: 22%; animation: arch-flap 3.2s ease-in-out infinite 0.4s; }
+.arch-bird-3 { top: 12%; left: 30%; animation: arch-flap 3.2s ease-in-out infinite 0.9s; }
+
+.arch-sparkles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.arch-sparkle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 248, 224, 0.95);
+  box-shadow: 0 0 10px rgba(240, 193, 75, 0.8);
+  opacity: 0;
+  animation: arch-twinkle 5.5s ease-in-out infinite;
+}
+
+.arch-sparkles-warm .arch-sparkle { background: rgba(255, 236, 190, 0.98); }
+.arch-sparkles-night .arch-sparkle { background: rgba(255, 252, 240, 0.95); }
+
+/* ---------------------------------------------------------------- */
+/* Opening scene                                                      */
+/* ---------------------------------------------------------------- */
+
+.arch-opening-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: center;
+}
+
+.arch-map-wrap {
+  justify-self: center;
+  width: min(100%, 34rem);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-map-wrap.is-ready {
+  opacity: 1;
+  transform: none;
+}
+
+.arch-canada-map,
+.arch-ontario-map {
+  display: block;
+  width: 100%;
+  height: auto;
+  color: var(--arch-red);
+}
+
+.arch-map-land {
+  fill: #e8dcc6;
+  stroke: rgba(62, 44, 34, 0.3);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+:root.dark .arch-map-land {
+  fill: #3a3129;
+  stroke: rgba(246, 239, 230, 0.28);
+}
+
+.arch-map-bay,
+.arch-map-lakes { fill: rgba(143, 183, 205, 0.8); }
+.arch-map-isles { fill: #ddd0b8; }
+:root.dark .arch-map-isles { fill: #342c25; }
+
+.arch-route {
+  fill: none;
+  stroke: var(--arch-red);
+  stroke-width: 2.6;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+.arch-route.is-drawing {
+  stroke-dashoffset: 1;
+  animation: arch-route-draw 3.2s 0.2s ease forwards;
+}
+
+.arch-route-dots {
+  fill: none;
+  stroke: var(--paper);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-dasharray: 0.006 0.026;
+  opacity: 0.85;
+}
+
+.arch-route-dots.is-delayed {
+  opacity: 0;
+  animation: arch-fade 0.8s 2.9s ease forwards;
+}
+
+.arch-route.is-progress {
+  stroke-dasharray: 1;
+  stroke-dashoffset: calc(1 - var(--route-progress, 0));
+  transition: stroke-dashoffset 1.8s ease;
+}
+
+.arch-plane { color: var(--arch-ink); }
+
+.arch-map-pin,
+.arch-map-city {
+  fill: var(--arch-red);
+}
+
+.arch-map-pin text,
+.arch-map-city text {
+  fill: var(--arch-ink);
+  font-family: var(--font-hand);
+  font-size: 20px;
+}
+
+.arch-pin-pulse {
+  fill: var(--arch-red);
+  opacity: 0.25;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: arch-pulse 2.6s ease-out infinite;
+}
+
+/* ---------------------------------------------------------------- */
+/* Toronto skyline                                                    */
+/* ---------------------------------------------------------------- */
+
+.arch-skyline-wrap {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  margin-top: 2.5rem;
+  aspect-ratio: 1200 / 620;
+  transform-origin: 50% 100%;
+}
+
+.arch-skyline {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.arch-ground { fill: var(--arch-ground); }
+.arch-ground-haze { fill: #8fb3cc; }
+:root.dark .arch-ground-haze { fill: #1f3340; }
+
+.arch-rise {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  transform: translateY(40%);
+  opacity: 0;
+  transition:
+    transform 1s cubic-bezier(0.22, 1, 0.36, 1) var(--rise-delay, 0s),
+    opacity 0.7s ease var(--rise-delay, 0s);
+}
+
+.arch-skyline-wrap:not(.is-stage-0) .arch-rise {
+  transform: none;
+  opacity: 1;
+}
+
+.arch-window {
+  fill: #9fb0bc;
+  opacity: 0.5;
+  transition: fill 0.5s ease var(--win-delay, 0s), opacity 0.5s ease var(--win-delay, 0s);
+}
+
+.arch-skyline-wrap.is-stage-3 .arch-window.is-lit {
+  fill: #f6d892;
+  opacity: 1;
+}
+
+.arch-tower-shaft,
+.arch-tower-pod,
+.arch-tower-upper,
+.arch-tower-sky,
+.arch-tower-mast {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.arch-tower-shaft {
+  transform: scaleY(0.04);
+  transition: transform 1.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-tower-pod,
+.arch-tower-upper,
+.arch-tower-sky,
+.arch-tower-mast {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-skyline-wrap.is-stage-2 .arch-tower-shaft,
+.arch-skyline-wrap.is-stage-3 .arch-tower-shaft {
+  transform: none;
+}
+
+.arch-skyline-wrap.is-stage-2 .arch-tower-pod,
+.arch-skyline-wrap.is-stage-3 .arch-tower-pod {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.85s;
+}
+
+.arch-skyline-wrap.is-stage-2 .arch-tower-upper,
+.arch-skyline-wrap.is-stage-3 .arch-tower-upper {
+  opacity: 1;
+  transform: none;
+  transition-delay: 1s;
+}
+
+.arch-skyline-wrap.is-stage-2 .arch-tower-sky,
+.arch-skyline-wrap.is-stage-3 .arch-tower-sky {
+  opacity: 1;
+  transform: none;
+  transition-delay: 1.15s;
+}
+
+.arch-skyline-wrap.is-stage-2 .arch-tower-mast,
+.arch-skyline-wrap.is-stage-3 .arch-tower-mast {
+  opacity: 1;
+  transform: none;
+  transition-delay: 1.3s;
+}
+
+.arch-beacon { animation: arch-beacon 2.4s ease-in-out infinite; }
+
+.arch-flag-cloth {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  animation: arch-wave 4.2s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------- */
+/* Northern Ontario                                                   */
+/* ---------------------------------------------------------------- */
+
+.arch-sudbury-grid {
+  display: grid;
+  gap: 1.75rem;
+  align-items: center;
+}
+
+.arch-ontario-wrap {
+  justify-self: center;
+  width: min(100%, 15rem);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.arch-ontario-wrap.is-ready { opacity: 1; transform: none; }
+
+.arch-north {
+  position: relative;
+  z-index: 2;
+  margin-top: 1.75rem;
+  width: 100%;
+  aspect-ratio: 1200 / 440;
+}
+
+.arch-north-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.arch-north-sun { fill: rgba(255, 221, 170, 0.75); }
+:root.dark .arch-north-sun { fill: rgba(224, 160, 120, 0.4); }
+
+.arch-pine {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: arch-sway 7s ease-in-out infinite var(--sway-delay, 0s);
+}
+
+.arch-nickel {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: arch-shine 6s ease-in-out infinite;
+}
+
+.arch-road-dashes {
+  stroke: #f3e2bd;
+  stroke-width: 6;
+  stroke-dasharray: 18 20;
+  animation: arch-road 1.6s linear infinite;
+}
+
+.arch-north-roadgroup { opacity: 0; transition: opacity 0.7s ease; }
+.arch-north.is-stage-1 .arch-north-roadgroup,
+.arch-north.is-stage-2 .arch-north-roadgroup { opacity: 1; }
+
+.arch-north-car {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+}
+
+.arch-north.is-stage-2 .arch-north-car {
+  animation: arch-bump 1.8s ease-in-out infinite;
+}
+
+/* ---------------------------------------------------------------- */
+/* The workplace                                                      */
+/* ---------------------------------------------------------------- */
+
+.arch-building-stage {
+  position: relative;
+  width: min(100%, 52rem);
+  margin: 2.25rem auto 0;
+  aspect-ratio: 660 / 420;
+}
+
+.arch-building-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.arch-office,
+.arch-interior {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.arch-pane {
+  fill: #cfe4ef;
+  opacity: 0;
+  transition: opacity 0.6s ease var(--pane-delay, 0s);
+}
+
+.arch-office:not(.is-stage-0) .arch-pane { opacity: 0.85; }
+
+.arch-glass-sheen {
+  fill: rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  transform-box: view-box;
+  transition: opacity 0.8s ease;
+}
+
+.arch-office:not(.is-stage-0) .arch-glass-sheen {
+  opacity: 1;
+  animation: arch-sheen 7s ease-in-out infinite 1s;
+}
+
+.arch-door-leaf {
+  transform-box: view-box;
+  transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-office.is-stage-2 .arch-door-left,
+.arch-office.is-stage-3 .arch-door-left { transform: translateX(-70px); }
+
+.arch-office.is-stage-2 .arch-door-right,
+.arch-office.is-stage-3 .arch-door-right { transform: translateX(70px); }
+
+.arch-office-light {
+  fill: rgba(246, 216, 146, 0.55);
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+
+.arch-office.is-stage-2 .arch-office-light,
+.arch-office.is-stage-3 .arch-office-light { opacity: 1; }
+
+.arch-office-person {
+  transform-box: view-box;
+  transition: transform 1.6s cubic-bezier(0.33, 0, 0.2, 1), opacity 0.5s ease 1.2s;
+}
+
+.arch-office.is-stage-3 .arch-office-person {
+  transform: translateX(-138px);
+  opacity: 0;
+}
+
+.arch-person.is-walk .arch-leg-front,
+.arch-person.is-walk .arch-arm-front,
+.arch-person.is-walk .arch-leg-back,
+.arch-person.is-walk .arch-arm-back {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+}
+
+.arch-office:not(.is-stage-3) .arch-person.is-walk .arch-leg-front { animation: arch-step 0.9s ease-in-out infinite; }
+.arch-office:not(.is-stage-3) .arch-person.is-walk .arch-leg-back { animation: arch-step 0.9s ease-in-out infinite reverse; }
+.arch-office:not(.is-stage-3) .arch-person.is-walk .arch-arm-front { animation: arch-step 0.9s ease-in-out infinite reverse; }
+.arch-office:not(.is-stage-3) .arch-person.is-walk .arch-arm-back { animation: arch-step 0.9s ease-in-out infinite; }
+
+.arch-lamp-glow { animation: arch-lights 1.6s ease forwards; }
+.arch-interior-sheets { animation: arch-fade-up 0.9s 0.5s ease backwards; }
+
+.arch-arrival-card {
+  width: min(100%, 30rem);
+  margin: 2rem auto 0;
+  padding: 1.4rem 1.6rem 1.6rem;
+  text-align: center;
+  background: var(--paper);
+  border: 1px solid var(--arch-edge);
+  border-radius: 16px;
+  box-shadow: 0 18px 40px rgba(80, 52, 32, 0.14);
+}
+
+.arch-arrival-place {
+  margin: 0;
+  font-family: var(--font-type);
+  font-size: 0.78rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+}
+
+.arch-arrival-date {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  margin: 0.6rem 0 0;
+  color: var(--paper-ink);
+}
+
+.arch-arrival-date span {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+.arch-arrival-date strong {
+  font-family: var(--font-hand);
+  font-size: clamp(2rem, 6vw, 2.9rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--sun-deep);
+}
+
+/* ---------------------------------------------------------------- */
+/* Design studio                                                      */
+/* ---------------------------------------------------------------- */
+
+.arch-studio-grid {
+  display: grid;
+  gap: 2rem;
+  margin-top: 2.25rem;
+}
+
+.arch-board {
+  position: relative;
+  padding: 1rem;
+  background: var(--paper);
+  border: 1px solid var(--arch-edge);
+  border-radius: 12px;
+  box-shadow: 0 18px 38px rgba(80, 52, 32, 0.12);
+}
+
+.arch-board-sheet {
+  position: relative;
+  aspect-ratio: 420 / 310;
+}
+
+.arch-board-layer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.arch-plan,
+.arch-iso,
+.arch-desk {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: var(--blueprint, #35586d);
+}
+
+.arch-plan { color: #35586d; }
+:root.dark .arch-plan { color: #cfe2ee; }
+
+.arch-plan-grid path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.6;
+  opacity: 0.16;
+}
+
+.arch-plan-static {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.25;
+}
+
+.arch-plan-dims,
+.arch-plan-labels {
+  animation: arch-fade 0.8s ease backwards;
+}
+
+.arch-plan-dims path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.1;
+  opacity: 0.65;
+}
+
+.arch-plan-dims text {
+  fill: currentColor;
+  font-family: var(--font-type);
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.arch-plan-labels text {
+  fill: currentColor;
+  font-family: var(--font-hand);
+  font-size: 23px;
+  text-anchor: middle;
+}
+
+.arch-board-tools {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.75rem;
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.arch-board:not(.is-stage-0) .arch-board-tools { opacity: 1; }
+
+.arch-tool { display: block; border-radius: 2px; }
+.arch-tool-pencil { width: 4px; height: 54px; background: linear-gradient(#e0b03a 72%, #d9a583 72% 88%, #3a3330 88%); transform: rotate(14deg); }
+.arch-tool-rule { width: 58px; height: 9px; background: repeating-linear-gradient(90deg, #cdd9df 0 9px, #b9c8d1 9px 10px); }
+.arch-tool-pad { width: 26px; height: 20px; background: #fdfbf4; border: 1px solid var(--arch-edge); }
+
+.arch-studio-side {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.arch-desk-lampglow,
+.arch-desk-lamp,
+.arch-screen-art,
+.arch-desk-sheets,
+.arch-float-sheets {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+
+.arch-desk:not(.is-stage-0) .arch-desk-sheets { opacity: 1; }
+.arch-desk.is-stage-4 .arch-desk-lamp,
+.arch-desk.is-stage-5 .arch-desk-lamp { opacity: 1; }
+.arch-desk.is-stage-4 .arch-desk-lampglow,
+.arch-desk.is-stage-5 .arch-desk-lampglow { opacity: 1; fill: rgba(246, 216, 146, 0.4); }
+.arch-desk.is-stage-4 .arch-screen-art,
+.arch-desk.is-stage-5 .arch-screen-art { opacity: 1; }
+.arch-desk.is-stage-5 .arch-float-sheets { opacity: 1; animation: arch-float 6s ease-in-out infinite; }
+
+.arch-screen-cursor {
+  transform-box: view-box;
+  transform: translate(252px, 206px);
+  animation: arch-cursor 5s ease-in-out infinite;
+}
+
+.arch-titleblock {
+  padding: 0.9rem 1.1rem;
+  background: var(--arch-soft);
+  border: 1px solid var(--arch-edge);
+  font-family: var(--font-type);
+  font-size: 0.82rem;
+  line-height: 1.9;
+  color: var(--arch-ink);
+}
+
+.arch-titleblock p { margin: 0; }
+.arch-titleblock-head { letter-spacing: 0.2em; opacity: 0.7; }
+.arch-titleblock-project { font-family: var(--font-hand); font-size: 1.6rem; line-height: 1.1; }
+.arch-titleblock-scale { font-style: italic; opacity: 0.75; }
+
+.arch-closing-note {
+  margin: 2rem auto 0;
+  max-width: 34rem;
+  text-align: center;
+  font-family: var(--font-hand);
+  font-size: clamp(1.9rem, 5vw, 2.6rem);
+  line-height: 1.1;
+  color: var(--sun-deep);
+}
+
+/* ---------------------------------------------------------------- */
+/* Isometric model                                                    */
+/* ---------------------------------------------------------------- */
+
+.arch-iso-site {
+  fill: none;
+  stroke: var(--arch-line);
+  stroke-width: 2;
+  stroke-dasharray: 9 9;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.arch-iso.is-stage-0 .arch-iso-site { opacity: 0.8; }
+
+.arch-iso-shadow { fill: rgba(62, 44, 34, 0.12); }
+
+.arch-iso-slab,
+.arch-iso-body,
+.arch-iso-windows,
+.arch-iso-roof,
+.arch-iso-trees {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-iso:not(.is-stage-0) .arch-iso-slab { opacity: 1; transform: none; }
+
+.arch-iso.is-stage-2 .arch-iso-body,
+.arch-iso.is-stage-3 .arch-iso-body,
+.arch-iso.is-stage-4 .arch-iso-body { opacity: 1; transform: none; }
+
+.arch-iso.is-stage-3 .arch-iso-windows,
+.arch-iso.is-stage-4 .arch-iso-windows { opacity: 1; transform: none; }
+
+.arch-iso.is-stage-4 .arch-iso-roof,
+.arch-iso.is-stage-4 .arch-iso-trees { opacity: 1; transform: none; transition-delay: 0.15s; }
+
+.arch-iso-pane {
+  fill: #cfe4ef;
+  opacity: 0;
+  animation: arch-fade 0.5s ease forwards var(--pane-delay, 0s);
+}
+
+.arch-iso-pane.is-shaded { fill: #b2cddb; }
+
+.arch-iso.is-evening .arch-iso-pane { fill: #f6d892; }
+.arch-iso.is-evening .arch-iso-pane.is-shaded { fill: #e8bf6f; }
+
+.arch-iso.is-sway { animation: arch-iso-sway 16s ease-in-out infinite; }
+
+/* ---------------------------------------------------------------- */
+/* Interactive playground                                             */
+/* ---------------------------------------------------------------- */
+
+.arch-play {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+  margin-top: 2rem;
+  padding: 1.25rem;
+  background: var(--arch-soft);
+  border: 1px solid var(--arch-edge);
+  border-radius: 18px;
+}
+
+.arch-play-model { aspect-ratio: 420 / 390; }
+
+.arch-play-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.arch-play-steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.4;
+  opacity: 0.5;
+  transition: opacity 0.4s ease;
+}
+
+.arch-play-steps li.is-done { opacity: 1; }
+
+.arch-play-dot {
+  flex: none;
+  margin-top: 0.45rem;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--sun-deep);
+  background: transparent;
+  transition: background 0.4s ease;
+}
+
+.arch-play-steps li.is-done .arch-play-dot { background: var(--sun); }
+
+.arch-play-live {
+  margin: 1rem 0 0;
+  font-family: var(--font-type);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.arch-play-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.9rem;
+}
+
+/* ---------------------------------------------------------------- */
+/* Milestone and timeline                                             */
+/* ---------------------------------------------------------------- */
+
+.arch-date-card {
+  position: relative;
+  width: min(100%, 26rem);
+  margin-inline: auto;
+  padding: 2.2rem 1.5rem 1.8rem;
+  text-align: center;
+  background: var(--paper);
+  border: 1px solid var(--arch-edge);
+  border-radius: 18px;
+  box-shadow: 0 20px 44px rgba(80, 52, 32, 0.16);
+}
+
+.arch-date-tab {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 10px;
+  border-radius: 18px 18px 0 0;
+  background: var(--arch-red);
+}
+
+.arch-date-month {
+  margin: 0;
+  font-family: var(--font-type);
+  font-size: 0.78rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+}
+
+.arch-date-big { margin: 0.2rem 0 0; }
+
+.arch-date-day {
+  font-family: var(--font-hand);
+  font-size: clamp(5rem, 18vw, 7.5rem);
+  font-weight: 700;
+  line-height: 0.85;
+  color: var(--paper-ink);
+}
+
+.arch-date-line {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-style: italic;
+  color: var(--paper-ink);
+}
+
+.arch-countdown {
+  display: flex;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-top: 1.3rem;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--arch-edge);
+}
+
+.arch-countdown-unit { display: flex; flex-direction: column; align-items: center; }
+
+.arch-countdown-unit strong {
+  font-family: var(--font-hand);
+  font-size: 2.3rem;
+  line-height: 1;
+  color: var(--sun-deep);
+}
+
+.arch-countdown-unit em {
+  font-family: var(--font-type);
+  font-size: 0.68rem;
+  font-style: normal;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+}
+
+.arch-countdown-done {
+  margin: 1.2rem 0 0;
+  padding-top: 1.1rem;
+  border-top: 1px dashed var(--arch-edge);
+  font-family: var(--font-hand);
+  font-size: 2.2rem;
+  line-height: 1;
+  color: var(--sun-deep);
+}
+
+.arch-timeline {
+  position: relative;
+  margin: 2.25rem 0 0;
+  padding: 0 0 0 2.6rem;
+  list-style: none;
+}
+
+.arch-timeline-rail {
+  position: absolute;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  left: 0.72rem;
+  width: 2px;
+  background: var(--arch-edge);
+}
+
+.arch-timeline-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--sun-deep);
+  transform-origin: top;
+}
+
+.arch-timeline-item {
+  position: relative;
+  padding-bottom: 1.6rem;
+}
+
+.arch-timeline-dot {
+  position: absolute;
+  left: -2.6rem;
+  top: 0.1rem;
+  display: grid;
+  place-items: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--sun-deep);
+  font-family: var(--font-type);
+  font-size: 0.7rem;
+  color: var(--paper-ink);
+}
+
+.arch-timeline-item h3 {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: 1.95rem;
+  line-height: 1;
+  color: var(--arch-ink);
+}
+
+.arch-timeline-item p {
+  margin: 0.3rem 0 0;
+  max-width: 36rem;
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  opacity: 0.82;
+}
+
+/* ---------------------------------------------------------------- */
+/* Finale                                                             */
+/* ---------------------------------------------------------------- */
+
+.arch-finale-stage {
+  position: relative;
+  width: min(100%, 46rem);
+  margin-inline: auto;
+  aspect-ratio: 16 / 10;
+}
+
+.arch-finale-backdrop {
+  position: absolute;
+  inset: auto 0 0;
+  width: 100%;
+  height: 62%;
+}
+
+.arch-finale-model {
+  position: absolute;
+  inset: 2% 12% 6% 12%;
+  display: grid;
+  place-items: center;
+}
+
+.arch-finale-person {
+  position: absolute;
+  left: 4%;
+  bottom: 4%;
+  width: 16%;
+  min-width: 68px;
+  animation: arch-fade-up 1s 0.4s ease backwards;
+}
+
+.arch-finale-copy {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.arch-finale-line {
+  margin: 0 auto 0.5rem;
+  max-width: 36rem;
+  color: #fbf4ea;
+}
+
+.arch-finale-line-1 {
+  font-family: var(--font-hand);
+  font-size: clamp(2.3rem, 7vw, 3.6rem);
+  line-height: 1;
+}
+
+.arch-finale-line-2 {
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 3vw, 1.45rem);
+  font-style: italic;
+  opacity: 0.9;
+}
+
+.arch-finale-line-3 {
+  margin-bottom: 1.4rem;
+  font-family: var(--font-hand);
+  font-size: clamp(1.7rem, 4.6vw, 2.3rem);
+  color: #f6d892;
+}
+
+/* ---------------------------------------------------------------- */
+/* Keyframes                                                          */
+/* ---------------------------------------------------------------- */
+
+@keyframes arch-drift {
+  from { transform: translateX(0) scale(var(--cloud-scale, 1)); }
+  to { transform: translateX(145vw) scale(var(--cloud-scale, 1)); }
+}
+
+@keyframes arch-glow {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+
+@keyframes arch-twinkle {
+  0%, 100% { opacity: 0; transform: scale(0.5); }
+  45% { opacity: 0.9; transform: scale(1); }
+}
+
+@keyframes arch-flap {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  50% { transform: translateY(-6px) scaleY(0.72); }
+}
+
+@keyframes arch-route-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes arch-pulse {
+  0% { transform: scale(0.6); opacity: 0.35; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+@keyframes arch-beacon {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@keyframes arch-wave {
+  0%, 100% { transform: skewY(0deg) scaleX(1); }
+  50% { transform: skewY(-2.5deg) scaleX(0.97); }
+}
+
+@keyframes arch-sway {
+  0%, 100% { transform: rotate(-1.1deg); }
+  50% { transform: rotate(1.1deg); }
+}
+
+@keyframes arch-shine {
+  0%, 100% { transform: rotate(-1deg); }
+  50% { transform: rotate(1deg); }
+}
+
+@keyframes arch-road {
+  to { stroke-dashoffset: -38; }
+}
+
+@keyframes arch-bump {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+}
+
+@keyframes arch-sheen {
+  0%, 100% { transform: translateX(-40px); opacity: 0.18; }
+  50% { transform: translateX(40px); opacity: 0.5; }
+}
+
+@keyframes arch-step {
+  0%, 100% { transform: rotate(-11deg); }
+  50% { transform: rotate(11deg); }
+}
+
+@keyframes arch-lights {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes arch-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes arch-fade-up {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes arch-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-7px); }
+}
+
+@keyframes arch-cursor {
+  0% { transform: translate(230px, 192px); }
+  35% { transform: translate(300px, 210px); }
+  65% { transform: translate(256px, 228px); }
+  100% { transform: translate(230px, 192px); }
+}
+
+@keyframes arch-iso-sway {
+  0%, 100% { transform: perspective(1100px) rotateY(-5deg); }
+  50% { transform: perspective(1100px) rotateY(5deg); }
+}
+
+/* ---------------------------------------------------------------- */
+/* Layout: tablet and desktop                                         */
+/* ---------------------------------------------------------------- */
+
+@media (min-width: 720px) {
+  .arch-scene { padding: 6rem 0; }
+  .arch-scene-day,
+  .arch-scene-dusk { padding-bottom: 0; }
+  .arch-opening-grid { grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 3rem; }
+  .arch-sudbury-grid { grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: 2.5rem; }
+  .arch-studio-grid { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); gap: 2.25rem; }
+  .arch-play { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: 2rem; padding: 1.75rem; }
+  .arch-timeline { padding-left: 3.1rem; }
+  .arch-timeline-rail { left: 0.95rem; }
+  .arch-timeline-dot { left: -3.1rem; width: 1.9rem; height: 1.9rem; font-size: 0.78rem; }
+}
+
+@media (max-width: 719px) {
+  .arch-scene-dawn { min-height: auto; padding: 3.5rem 0 4rem; }
+  .arch-sun { top: 6%; right: 6%; }
+  .arch-building-stage { margin-top: 1.5rem; }
+  .arch-skyline-wrap { aspect-ratio: 660 / 620; margin-top: 1.5rem; }
+  .arch-north { aspect-ratio: 500 / 440; margin-top: 1rem; }
+  .arch-scene-dusk::after { height: 46px; }
+  .arch-board { padding: 0.65rem; }
+  .arch-play { padding: 1rem; }
+  .arch-finale-stage { aspect-ratio: 4 / 3; }
+  .arch-finale-person { width: 20%; }
+}
+
+/* ---------------------------------------------------------------- */
+/* Reduced motion                                                     */
+/* ---------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-page *,
+  .arch-page *::before,
+  .arch-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .arch-cloud,
+  .arch-sun,
+  .arch-sparkles { display: none; }
+
+  .arch-route { stroke-dashoffset: 0 !important; }
+  .arch-map-wrap,
+  .arch-ontario-wrap { opacity: 1; transform: none; }
+
+  /* Only elements whose reveal is animation-driven need forcing here. Stage
+     classes still apply, so everything else lands in its final state. */
+  .arch-iso-pane,
+  .arch-route-dots,
+  .arch-plan-dims,
+  .arch-plan-labels,
+  .arch-interior-sheets,
+  .arch-finale-person {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .arch-window.is-lit { fill: #f6d892; opacity: 1; }
+  .arch-lamp-glow,
+  .arch-desk-lampglow { opacity: 1; }
+}
