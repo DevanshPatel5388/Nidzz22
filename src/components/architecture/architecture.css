@@ -1580,3 +1580,139 @@
   .arch-lamp-glow,
   .arch-desk-lampglow { opacity: 1; }
 }
+
+/* ---------------------------------------------------------------- */
+/* Margin rail: a drawing sheet's edge, not a progress bar            */
+/* ---------------------------------------------------------------- */
+
+.arch-rail {
+  position: fixed;
+  top: 50%;
+  left: 0.75rem;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  color: var(--arch-ink);
+  transform: translateY(-50%);
+}
+
+/* The rail is fixed, so it crosses the evening scene's dark backdrop. */
+.arch-rail.is-dark { color: #f3ece2; }
+
+.arch-rail-line {
+  position: absolute;
+  top: 0.2rem;
+  bottom: 0.2rem;
+  left: 0.42rem;
+  width: 1px;
+  background: currentColor;
+  opacity: 0.22;
+}
+
+.arch-rail-tick {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  border: 0;
+  background: none;
+  padding: 0 0.2rem;
+  cursor: pointer;
+  color: inherit;
+  opacity: 0.36;
+  transition: opacity 0.3s ease;
+}
+
+.arch-rail-tick::before {
+  content: "";
+  flex: none;
+  width: 0.85rem;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
+.arch-rail-tick.is-here { opacity: 1; }
+.arch-rail-tick:hover { opacity: 0.72; }
+
+.arch-rail-tick.is-here::before {
+  width: 1.5rem;
+  height: 2px;
+}
+
+.arch-rail-num {
+  font-family: var(--font-type);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+}
+
+.arch-rail-name {
+  font-family: var(--font-hand);
+  font-size: 1.05rem;
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.arch-rail-tick.is-here .arch-rail-name,
+.arch-rail-tick:hover .arch-rail-name,
+.arch-rail-tick:focus-visible .arch-rail-name {
+  opacity: 0.8;
+  transform: none;
+}
+
+/* Fourteen tappable ticks cannot be both legible and finger-sized in a
+   phone's margin, so the rail is a desktop affordance only. */
+@media (max-width: 1024px) {
+  .arch-rail { display: none; }
+}
+
+/* ---------------------------------------------------------------- */
+/* Finale handoff, and two measured mobile fixes                      */
+/* ---------------------------------------------------------------- */
+
+.arch-finale-handoff {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.arch-finale-handoff .arch-btn {
+  border-color: var(--rose, #c4645e);
+  color: #3e2c22;
+  text-decoration: none;
+}
+
+.arch-finale-handoff .arch-btn-quiet {
+  color: #f7efe6;
+}
+
+/* Measured at 158 x 36px — 8px under the 44px tap minimum. */
+.arch-btn-quiet {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+/* Measured at 10.88px, the smallest text on the page, on the element
+   people actually read. */
+.arch-countdown-unit em {
+  font-size: 0.8rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-rail-tick,
+  .arch-rail-tick::before,
+  .arch-rail-name { transition: none; }
+}
+
+/* The slide and tool tabs measured 35px tall — 9px under the tap minimum. */
+.arch-tool-tabs button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}

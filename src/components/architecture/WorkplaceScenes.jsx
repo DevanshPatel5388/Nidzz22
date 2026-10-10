@@ -200,7 +200,7 @@ export function StudioScene({ reduce }) {
               <p className="arch-titleblock-project">project: a beautiful beginning</p>
               <p>drawn for: {site.name}</p>
               <p>location: Sudbury, ON</p>
-              <p>sheet: 01 / 01</p>
+              <p>sheet: 10 / 14</p>
               <p className="arch-titleblock-scale">scale: full of hope</p>
             </div>
           </div>

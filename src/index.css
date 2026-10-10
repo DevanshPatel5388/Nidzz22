@@ -13,6 +13,8 @@
   --sun: #f0c14b;
   --sun-deep: #c8922a;
   --leaf: #6f8f5c;
+  --rose: #c4645e;
+  --sepia: #8a7360;
   --line: rgba(62, 44, 34, 0.12);
   --paper: #fffaf3;
   --paper-ink: #3e2c22;
@@ -31,6 +33,8 @@
   --sun: #e6b84a;
   --sun-deep: #f0c56e;
   --leaf: #9db583;
+  --rose: #d98079;
+  --sepia: #b59d88;
   --line: rgba(246, 239, 230, 0.1);
   color-scheme: dark;
 }

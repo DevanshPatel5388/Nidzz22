@@ -5,6 +5,25 @@ import { HardWorkScene, PresentationScene, SiteVisitScene, ToolsScene } from "..
 import { HumberScene, OpeningScene, SudburyScene, TorontoScene } from "../components/architecture/JourneyScenes";
 import { HatchScene, PlaygroundScene, StudioScene } from "../components/architecture/WorkplaceScenes";
 import { FinaleScene, JourneyTimeline, MilestoneScene } from "../components/architecture/ClosingScenes";
+import SceneRail from "../components/architecture/SceneRail";
+
+/** The scenes the margin rail ticks through, in page order. */
+const SCENES = [
+  { id: "scene-begin", label: "Arriving" },
+  { id: "scene-humber", label: "Humber" },
+  { id: "scene-toronto", label: "Toronto" },
+  { id: "scene-work", label: "The work" },
+  { id: "scene-site", label: "Site visits" },
+  { id: "scene-present", label: "Presenting" },
+  { id: "scene-tools", label: "The tools" },
+  { id: "scene-sudbury", label: "The road north" },
+  { id: "scene-hatch", label: "Hatch" },
+  { id: "scene-studio", label: "The drawing board" },
+  { id: "scene-playground", label: "Your turn" },
+  { id: "scene-milestone", label: "October 26" },
+  { id: "scene-timeline", label: "The whole journey" },
+  { id: "scene-finale", label: "Your story", dark: true },
+];
 
 /**
  * Architecture World.
@@ -23,6 +42,7 @@ export default function Architecture() {
 
   return (
     <div className="arch-page">
+      <SceneRail scenes={SCENES} reduce={reduce} />
       <div className="arch-stack" key={replayKey}>
         <OpeningScene reduce={reduce} />
         <HumberScene reduce={reduce} />

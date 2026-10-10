@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Character, IsoBuilding, PineTree, SparkleField } from "./figures";
 import { scrollToScene } from "./useStageSequence";
@@ -190,16 +191,27 @@ export function FinaleScene({ reduce, onReplay }) {
             </motion.p>
           ))}
 
-          <button
-            type="button"
-            className="arch-btn arch-btn-light"
-            onClick={() => {
-              onReplay();
-              scrollToScene("scene-begin", reduce);
-            }}
+          <motion.div
+            className="arch-finale-handoff"
+            initial={reduce ? false : { opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.6, delay: reduce ? 0 : 1.75 }}
           >
-            Replay the journey
-          </button>
+            <Link to="/letter" className="arch-btn arch-btn-light">
+              There&apos;s a letter for you
+            </Link>
+            <button
+              type="button"
+              className="arch-btn-quiet"
+              onClick={() => {
+                onReplay();
+                scrollToScene("scene-begin", reduce);
+              }}
+            >
+              replay the journey
+            </button>
+          </motion.div>
         </div>
       </div>
     </section>
