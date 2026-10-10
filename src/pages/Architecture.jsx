@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import "../components/architecture/architecture.css";
+import { HardWorkScene, PresentationScene, SiteVisitScene, ToolsScene } from "../components/architecture/CraftScenes";
 import { HumberScene, OpeningScene, SudburyScene, TorontoScene } from "../components/architecture/JourneyScenes";
 import { HatchScene, PlaygroundScene, StudioScene } from "../components/architecture/WorkplaceScenes";
 import { FinaleScene, JourneyTimeline, MilestoneScene } from "../components/architecture/ClosingScenes";
@@ -26,6 +27,10 @@ export default function Architecture() {
         <OpeningScene reduce={reduce} />
         <HumberScene reduce={reduce} />
         <TorontoScene reduce={reduce} />
+        <HardWorkScene reduce={reduce} />
+        <SiteVisitScene reduce={reduce} />
+        <PresentationScene reduce={reduce} />
+        <ToolsScene reduce={reduce} />
         <SudburyScene reduce={reduce} />
         <HatchScene reduce={reduce} />
         <StudioScene reduce={reduce} />

@@ -27,8 +27,9 @@ export function HatchScene({ reduce }) {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
         >
-          <p className="arch-eyebrow">Her Next Chapter Begins</p>
-          <h2 id="arch-hatch-title" className="arch-heading">Hatch | Sudbury, Ontario, Canada</h2>
+          <p className="arch-eyebrow">October 26, 2026</p>
+          <h2 id="arch-hatch-title" className="arch-heading">Her Next Chapter Begins.</h2>
+          <p className="arch-sub">Hatch · Sudbury, Ontario, Canada</p>
         </motion.div>
 
         <div className={`arch-building-stage is-stage-${stage}`}>
@@ -67,7 +68,6 @@ export function HatchScene({ reduce }) {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
           <p className="arch-arrival-date">
-            <span>Starting</span>
             <strong>October 26, 2026</strong>
           </p>
         </motion.div>
@@ -212,7 +212,7 @@ export function StudioScene({ reduce }) {
           animate={stage >= 5 || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
           transition={{ duration: 0.6 }}
         >
-          Here&apos;s to everything you&apos;ll create.
+          Here&apos;s to Everything You&apos;ll Create, Lakhoti.
         </motion.p>
       </div>
     </section>

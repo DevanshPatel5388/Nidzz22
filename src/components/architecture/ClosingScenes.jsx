@@ -83,6 +83,8 @@ const MILESTONES = [
   { title: "August 20, 2023", text: "Arriving in Canada." },
   { title: "Her Humber chapter", text: "Studying and growing." },
   { title: "Toronto and the CN Tower", text: "A new life, new experiences, and dreams taking shape." },
+  { title: "The work", text: "Deadlines, site visits, and presentations." },
+  { title: "The tools", text: "AutoCAD, Revit, SketchUp, and Twinmotion." },
   { title: "Arrival in Sudbury", text: "North into the pine and the rock, to the place the job is." },
   { title: "October 26, 2026", text: "Beginning at Hatch in Sudbury, Ontario." },
   { title: "Everything still to design", text: "The buildings, the drawings, and the ideas that have not happened yet." },
