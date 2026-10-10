@@ -3,6 +3,8 @@ import hairs from "../assets/photos/hairs.jpg";
 import eyes from "../assets/photos/eyes.jpg";
 import smile from "../assets/photos/smile.png";
 import nautanki from "../assets/photos/nautanki.jpg";
+// TODO: Set the path to the final birthday image here.
+import finalePhoto from "../assets/photos/finale.jpg";
 
 const beats = [
   {
@@ -42,8 +44,6 @@ const beats = [
     flip: true,
   },
 ];
-
-const finale = [hairs, eyes, smile, nautanki];
 
 export default function AboutStory({ reduce, fade }) {
   const rise = reduce ? false : { opacity: 0, y: 18 };
@@ -88,30 +88,19 @@ export default function AboutStory({ reduce, fade }) {
         );
       })}
 
-      <section className="about-finale" aria-label="The four photos together">
-        <div className="about-finale-row">
-          {finale.map((src, index) => (
-            <motion.img
-              key={src}
-              src={src}
-              alt=""
-              className={`about-finale-shot about-finale-shot-${index + 1}`}
-              initial={rise}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-40px" }}
-              transition={{ ...fade, delay: reduce ? 0 : index * 0.08 }}
-            />
-          ))}
-        </div>
-        <motion.p
-          className="about-finale-line"
+      <section className="about-finale" aria-label="A last photo of Lakhoti">
+        <motion.figure
+          className="about-finale-frame"
           initial={rise}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ ...fade, delay: reduce ? 0 : 0.28 }}
+          viewport={{ once: true, margin: "-40px" }}
+          transition={{ ...fade, duration: reduce ? 0 : 0.6 }}
         >
-          that's her.
-        </motion.p>
+          <img
+            src={finalePhoto}
+            alt="Lakhoti in a yellow dress, sitting beside yellow flowers"
+          />
+        </motion.figure>
       </section>
     </div>
   );
