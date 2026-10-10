@@ -649,21 +649,151 @@ body:has(.music-dock) #content {
   padding: 2.75rem 0 3.5rem;
 }
 
-.about-open {
+.about-story {
+  margin-top: 2.5rem;
+}
+
+.about-beat {
   display: grid;
-  gap: 1.5rem;
-  margin-top: 1.75rem;
-  align-items: start;
+  gap: 1.15rem;
+  align-items: center;
+  margin-top: 3.5rem;
 }
 
-.about-open:has(.about-portrait) {
-  justify-items: start;
+.about-beat-motion {
+  width: min(100%, 22rem);
 }
 
-@media (min-width: 768px) {
-  .about-open:has(.about-portrait) {
-    grid-template-columns: 16rem minmax(0, 36rem);
-    gap: 2.25rem;
+.about-beat-photo {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0.7rem 0.7rem 0.85rem;
+  background: var(--paper);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 16px 32px rgba(80, 52, 32, 0.1);
+}
+
+.about-beat-hair .about-beat-photo { transform: rotate(-1.4deg); }
+.about-beat-eyes .about-beat-photo { transform: rotate(1.1deg); }
+.about-beat-smile .about-beat-photo { transform: rotate(-0.6deg); }
+.about-beat-nautanki .about-beat-photo { transform: rotate(1.6deg); }
+
+.about-beat-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  background: #f3eadf;
+}
+
+.about-beat-hair .about-beat-photo {
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 0 0 8px rgba(240, 193, 75, 0.16),
+    0 16px 32px rgba(80, 52, 32, 0.1);
+}
+
+.about-beat-copy {
+  max-width: 28rem;
+}
+
+.about-beat-title {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: clamp(2.4rem, 5vw, 3.4rem);
+  font-weight: 500;
+  line-height: 0.95;
+  color: var(--ink);
+}
+
+.about-beat-caption {
+  margin: 0.7rem 0 0;
+  max-width: 26rem;
+  font-family: var(--font-serif);
+  font-size: 1.35rem;
+  font-style: italic;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.about-beat-smile .about-beat-caption {
+  font-size: 1.45rem;
+}
+
+.about-beat-nautanki .about-beat-caption {
+  font-family: var(--font-hand);
+  font-style: normal;
+  font-size: 2rem;
+  line-height: 1.05;
+}
+
+.about-finale {
+  margin-top: 5rem;
+  padding: 1.5rem 0 0.5rem;
+  text-align: center;
+}
+
+.about-finale-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.85rem;
+}
+
+.about-finale-shot {
+  width: min(38vw, 7.5rem);
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--paper);
+  padding: 0.35rem;
+  box-shadow: 0 10px 22px rgba(80, 52, 32, 0.1);
+}
+
+.about-finale-shot-1 { transform: rotate(-3deg); }
+.about-finale-shot-2 { transform: rotate(2deg); margin-top: 0.8rem; }
+.about-finale-shot-3 { transform: rotate(1.2deg); }
+.about-finale-shot-4 { transform: rotate(-2deg); margin-top: 0.65rem; }
+
+.about-finale-line {
+  margin: 1.4rem 0 0;
+  font-family: var(--font-hand);
+  font-size: clamp(2.6rem, 6vw, 3.6rem);
+  line-height: 1;
+  color: var(--ink);
+}
+
+@media (min-width: 800px) {
+  .about-beat {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: 3rem;
+    margin-top: 5rem;
+  }
+
+  .about-beat-motion { width: min(100%, 26rem); }
+  .about-beat.is-flip .about-beat-motion { order: 2; justify-self: end; }
+  .about-beat.is-flip .about-beat-copy { order: 1; justify-self: end; text-align: right; }
+  .about-beat.is-flip .about-beat-caption { margin-left: auto; }
+
+  .about-beat-photo {
+    transition: transform 0.35s ease;
+  }
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .about-beat-photo:hover {
+    transform: rotate(0deg) translateY(-3px);
+  }
+}
+
+@media (max-width: 799px) {
+  .about-beat-photo,
+  .about-beat-hair .about-beat-photo,
+  .about-beat-eyes .about-beat-photo,
+  .about-beat-smile .about-beat-photo,
+  .about-beat-nautanki .about-beat-photo {
+    transform: none;
   }
 }
 

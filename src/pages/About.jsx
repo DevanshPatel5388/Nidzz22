@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import AboutStory from "../components/AboutStory";
 import { BookStack, Cap, MusicNote, Paw, Pencil, Shoe, SittingCat, Sunflower } from "../components/illustrations";
-import { site } from "../data/content";
-import { resolveNamed } from "../lib/photos";
 
 const notes = [
   {
@@ -86,56 +85,24 @@ function doodleFor(kind) {
   return <Paw className="h-8 w-8 text-blush-deep" />;
 }
 
-function FoundPhoto({ names, caption, tilt = "-rotate-2", className = "" }) {
-  const src = resolveNamed(names);
-  const [failed, setFailed] = useState(!src);
-  if (!src || failed) return null;
-
-  return (
-    <figure className={`polaroid w-full max-w-[16rem] ${tilt} ${className}`}>
-      <span className="tape tape-blush" aria-hidden="true" />
-      <div className="aspect-[4/5] overflow-hidden bg-[#f3eadf]">
-        <img
-          src={src}
-          alt={caption}
-          className="h-full w-full object-cover"
-          onError={() => setFailed(true)}
-        />
-      </div>
-      <figcaption className="absolute inset-x-3 bottom-2 text-center font-hand text-[1.7rem] leading-none text-paper-ink">
-        {caption}
-      </figcaption>
-    </figure>
-  );
-}
-
 export default function About() {
   const reduce = useReducedMotion();
   const fade = reduce ? { duration: 0 } : { duration: 0.45, ease: [0.22, 1, 0.36, 1] };
 
   return (
     <article className="about-journal">
-      <header className="max-w-2xl">
-        <p className="font-hand text-2xl text-sun-deep sm:text-3xl">if someone asked me</p>
+      <motion.header
+        className="max-w-2xl"
+        initial={reduce ? false : { opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-40px" }}
+        transition={fade}
+      >
+        <p className="font-hand text-2xl text-sun-deep sm:text-3xl">if someone asked me…</p>
         <h1 className="mt-1 font-hand text-5xl leading-none text-ink sm:text-6xl">Okay, so… her.</h1>
-      </header>
+      </motion.header>
 
-      <div className="about-open">
-        <FoundPhoto
-          names={["portrait", "photo-portrait", "her"]}
-          caption="Lakhoti"
-          tilt="sm:-rotate-2"
-          className="about-portrait"
-        />
-        <div className="max-w-xl space-y-4 text-[1.05rem] leading-relaxed text-ink sm:text-lg">
-          <p>
-            If someone asked me about Lakhoti, I would not give them a neat answer. I would say she is my Chaddi-Baddi, and then I would have to explain the fights, the weeks we did not talk, and the part where we ended up close again anyway.
-          </p>
-          <p>
-            She turns {site.age} on {site.birthdayLabel}. Architecture, college, work, studying, and LOVERS, lol. I do not know who approved that schedule.
-          </p>
-        </div>
-      </div>
+      <AboutStory reduce={reduce} fade={fade} />
 
       <section className="mt-14" aria-labelledby="little-things">
         <h2 id="little-things" className="font-hand text-4xl leading-none text-ink sm:text-5xl">
