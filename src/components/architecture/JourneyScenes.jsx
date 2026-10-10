@@ -4,6 +4,7 @@ import {
   Bird,
   BigNickel,
   CanadaMap,
+  Character,
   Cloud,
   OntarioMap,
   PineTree,
@@ -78,11 +79,9 @@ export function OpeningScene({ reduce }) {
 
       <div className="arch-scene-inner arch-opening-grid">
         <div className="arch-opening-copy">
-          <p className="arch-eyebrow">a new chapter</p>
+          <p className="arch-eyebrow">August 20, 2023</p>
           <h1 id="arch-opening-title" className="arch-title">
-            <LetterReveal text="A New Chapter," reduce={reduce} />
-            <br />
-            <LetterReveal text="A Beautiful Beginning" delay={0.5} reduce={reduce} />
+            <LetterReveal text="A New Chapter Begins in Canada" reduce={reduce} />
           </h1>
           <motion.p
             className="arch-lede"
@@ -90,7 +89,7 @@ export function OpeningScene({ reduce }) {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: reduce ? 0 : 1.5 }}
           >
-            From dreaming about the future to designing it.
+            Every beautiful journey begins with a single step.
           </motion.p>
 
           <motion.div
@@ -111,6 +110,65 @@ export function OpeningScene({ reduce }) {
         <motion.div className={`arch-map-wrap${stage >= 1 ? " is-ready" : ""}`} style={{ y: mapY }}>
           <CanadaMap animate={!reduce} />
         </motion.div>
+      </div>
+    </section>
+  );
+}
+
+const HUMBER_STEPS = [200, 1400];
+
+/**
+ * Her studies at Humber, between arriving in Canada and the skyline.
+ * The campus is an original drawing, not a specific Humber building.
+ */
+export function HumberScene({ reduce }) {
+  const [ref, stage] = useStageSequence(HUMBER_STEPS, { reduce });
+
+  return (
+    <section ref={ref} id="scene-humber" className="arch-scene arch-scene-day" aria-labelledby="arch-humber-title">
+      <div className="arch-scene-inner">
+        <motion.div
+          className="arch-scene-copy is-centred"
+          initial={reduce ? false : { opacity: 0, y: 18 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ duration: 0.6 }}
+        >
+          <p className="arch-eyebrow">Lakhoti studied at Humber</p>
+          <h2 id="arch-humber-title" className="arch-heading">Her Humber Chapter</h2>
+          <p className="arch-sub">A journey of learning, growth, and new possibilities.</p>
+        </motion.div>
+
+        <div className={`arch-campus is-stage-${stage}`}>
+          <svg viewBox="0 0 760 340" role="img" aria-label="An original illustration of a college campus and a study desk">
+            <rect width="760" height="340" fill="#f4efe4" />
+            <rect y="230" width="760" height="110" fill="#d5e0c4" />
+            <path d="M30 268h360" stroke="#c9b89a" strokeWidth="14" strokeLinecap="round" />
+            <g transform="translate(150 78)">
+              <rect width="250" height="150" fill="#fffaf3" stroke="#3e2c22" strokeWidth="1.6" />
+              <path d="M0 0h250" stroke="#c0463f" strokeWidth="8" />
+              <rect x="28" y="28" width="40" height="46" fill="#d7e4ef" stroke="#35586d" />
+              <rect x="84" y="28" width="40" height="46" fill="#d7e4ef" stroke="#35586d" />
+              <rect x="140" y="28" width="40" height="46" fill="#d7e4ef" stroke="#35586d" />
+              <rect x="104" y="96" width="42" height="54" fill="#f4c7c3" stroke="#3e2c22" />
+            </g>
+            <PineTree x={70} y={268} scale={0.7} />
+            <PineTree x={460} y={272} scale={0.55} dark />
+            <g className="arch-campus-walker">
+              <g transform="translate(70 292) scale(0.42)">
+                <Character pose="walk" />
+              </g>
+            </g>
+            <g transform="translate(500 46)">
+              <rect width="220" height="160" rx="8" fill="#fffaf3" stroke="#3e2c22" strokeWidth="1.4" />
+              <path d="M24 32h140M24 52h100" fill="none" stroke="#35586d" strokeWidth="2" />
+              <rect x="24" y="72" width="64" height="52" fill="none" stroke="#35586d" strokeWidth="2" />
+              <path d="M108 86h80M108 106h62" fill="none" stroke="#35586d" strokeWidth="2" />
+              <text x="24" y="146" fill="#3e2c22" fontFamily="Caveat, cursive" fontSize="22">notes</text>
+            </g>
+          </svg>
+        </div>
+        <p className="arch-campus-note">A campus drawn for her, not a picture of one building.</p>
       </div>
     </section>
   );
@@ -150,9 +208,8 @@ export function TorontoScene({ reduce }) {
           transition={{ duration: 0.6 }}
         >
           <h2 id="arch-toronto-title" className="arch-heading">
-            A new adventure in Canada <span className="arch-flag-emoji">🇨🇦</span>
+            A new life, new experiences, and dreams taking shape.
           </h2>
-          <p className="arch-sub">New places, new possibilities, and dreams taking shape.</p>
         </motion.div>
       </div>
 

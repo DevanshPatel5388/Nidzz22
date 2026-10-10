@@ -27,8 +27,8 @@ export function HatchScene({ reduce }) {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.6 }}
         >
-          <p className="arch-eyebrow">the first morning</p>
-          <h2 id="arch-hatch-title" className="arch-heading">Welcome to Your New Chapter at Hatch!</h2>
+          <p className="arch-eyebrow">Her Next Chapter Begins</p>
+          <h2 id="arch-hatch-title" className="arch-heading">Hatch | Sudbury, Ontario, Canada</h2>
         </motion.div>
 
         <div className={`arch-building-stage is-stage-${stage}`}>
@@ -66,7 +66,6 @@ export function HatchScene({ reduce }) {
           animate={stage >= 5 || reduce ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
-          <p className="arch-arrival-place">Sudbury, Ontario, Canada</p>
           <p className="arch-arrival-date">
             <span>Starting</span>
             <strong>October 26, 2026</strong>

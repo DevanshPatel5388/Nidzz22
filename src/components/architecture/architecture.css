@@ -1379,6 +1379,34 @@
 /* Reduced motion                                                     */
 /* ---------------------------------------------------------------- */
 
+.arch-campus {
+  width: min(100%, 52rem);
+  margin: 1.4rem auto 0;
+}
+
+.arch-campus svg { display: block; width: 100%; height: auto; }
+
+.arch-campus-walker { transform: translate(0, 0); }
+
+.arch-campus.is-stage-1 .arch-campus-walker,
+.arch-campus.is-stage-2 .arch-campus-walker {
+  animation: arch-campus-walk 3.4s ease-in-out forwards;
+}
+
+.arch-campus-note {
+  margin: 0.7rem auto 0;
+  max-width: 36rem;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #7c6556;
+}
+
+@keyframes arch-campus-walk {
+  to { transform: translate(168px, 0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .arch-page *,
   .arch-page *::before,
@@ -1405,6 +1433,11 @@
   .arch-finale-person {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .arch-campus.is-stage-1 .arch-campus-walker,
+  .arch-campus.is-stage-2 .arch-campus-walker {
+    transform: translate(168px, 0);
   }
 
   .arch-window.is-lit { fill: #f6d892; opacity: 1; }

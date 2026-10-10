@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import "../components/architecture/architecture.css";
-import { OpeningScene, SudburyScene, TorontoScene } from "../components/architecture/JourneyScenes";
+import { HumberScene, OpeningScene, SudburyScene, TorontoScene } from "../components/architecture/JourneyScenes";
 import { HatchScene, PlaygroundScene, StudioScene } from "../components/architecture/WorkplaceScenes";
 import { FinaleScene, JourneyTimeline, MilestoneScene } from "../components/architecture/ClosingScenes";
 
@@ -24,6 +24,7 @@ export default function Architecture() {
     <div className="arch-page">
       <div className="arch-stack" key={replayKey}>
         <OpeningScene reduce={reduce} />
+        <HumberScene reduce={reduce} />
         <TorontoScene reduce={reduce} />
         <SudburyScene reduce={reduce} />
         <HatchScene reduce={reduce} />

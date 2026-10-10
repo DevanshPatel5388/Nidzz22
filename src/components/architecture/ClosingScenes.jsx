@@ -80,12 +80,11 @@ export function MilestoneScene({ reduce }) {
 }
 
 const MILESTONES = [
-  { title: "A dream taking shape", text: "Drawings, late nights, and a very clear idea of what she wanted to be." },
-  { title: "A journey through Canada", text: "A new country, a new map, and a route pointing toward Ontario." },
-  { title: "Toronto and the CN Tower", text: "The first skyline that made the whole thing feel real." },
+  { title: "August 20, 2023", text: "Arriving in Canada." },
+  { title: "Her Humber chapter", text: "Studying and growing." },
+  { title: "Toronto and the CN Tower", text: "A new life, new experiences, and dreams taking shape." },
   { title: "Arrival in Sudbury", text: "North into the pine and the rock, to the place the job is." },
-  { title: "A new opportunity at Hatch", text: "The offer, the yes, and a desk waiting with her name on it." },
-  { title: "October 26, 2026", text: "Day one. The first morning of the career she worked for." },
+  { title: "October 26, 2026", text: "Beginning at Hatch in Sudbury, Ontario." },
   { title: "Everything still to design", text: "The buildings, the drawings, and the ideas that have not happened yet." },
 ];
 
