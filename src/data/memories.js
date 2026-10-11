@@ -53,7 +53,7 @@ export const memories = [
   chapter(11, "Aww", "Keeping this one forever! 🧡", "🥹", "900 / 1200"),
   chapter(12, "Bear", "Certified happy place! 🏡💛", "🧸", "621 / 1200"),
   chapter(13, "Artist", "The kind of day you want to rewind! ⏪💕", "🎨", "900 / 1200"),
-  chapter(14, "Teacher", "Still one of my favourites! 💖", "📚", "900 / 1200"),
+  chapter(14, "Try Not to Laugh", "Still one of my favourites! 💖", "😂", "900 / 1200"),
   chapter(15, "Multitasker", "Caught mid-sparkle! ✨😄", "🌀", "900 / 1200"),
   chapter(16, "One shoes ok", "Filed under: absolute joy! 📁💗", "👟", "900 / 1200"),
   chapter(17, "At crib", "This one needs no caption! 🫶", "🏠", "675 / 1200"),
