@@ -289,18 +289,26 @@ export const dreams = [
   },
 ];
 
-export const letter = `Happy Birthday!
+export const letter = `Happy Birthday, Chaddi.
 
-I honestly don't know how to put into words how grateful I am to have you in my life.
+I'm not going to list our memories here. You know them, and they're all over the rest of this site anyway. I wanted this page to say something else.
 
-You bring warmth, laughter, comfort, and countless good memories wherever you go. Whether we're talking about random things, sharing stories, laughing over silly moments, or simply spending time together, every memory becomes special because you're part of it.
+You do everything at full volume. When you're happy about something small, you're completely happy about it. When you're annoyed with me, there is absolutely no mistaking it. When you decide something matters, you give it everything and then act like that was nothing. I don't know many people who live like that. It is genuinely exhausting to keep up with and I would not change a thing.
 
-I admire your creativity, your passion for architecture, your love for the little things, and the way you care about people around you.
+And you make things. That's the part I don't think you give yourself enough credit for. Plenty of people say what they want to be. You said it, then did the work, through all of it, and now you're actually starting.
 
-I hope this year brings you happiness, success, exciting adventures, beautiful books, new places to explore, lots of sunflowers, countless cat encounters, and everything you've been wishing for.
+I'm proud of you. I don't say that out loud much, so I'm putting it somewhere you can't interrupt me.
 
-Thank you for being you.
+Somewhere along the way you became the person I tell things to first. The good news, the stupid news, the things I haven't worked out how to say properly yet. That's not a small thing to be, and you've never once made it feel like a job.
 
-Happy 22nd Birthday.
+I don't entirely know how to describe what you are to me. Best friend covers most of it. Not all of it. I'm leaving it there — some things are better left slightly unsaid, and you're clever enough to fill in the rest.
 
-You deserve the most beautiful year ahead ❤️`;
+This year I hope the new place starts to feel like yours fast. I hope you find the small things that make a city liveable — the coffee, the walk home, the cat that decides you're its person. I hope the work is hard in the good way, the way you like.
+
+And selfishly — I'm going to miss this. The cardio vlogs. The food treats. All the ordinary nonsense that never felt like anything at the time and suddenly does, now that I've done the maths on four hours.
+
+So don't forget me, Chaddi. Call when something good happens, and when something doesn't. Send the snaps, even the bad ones. Tell me about the first week, the first terrible coffee, the first person who gets on your nerves. I want all of it, however small.
+
+Four hours is a long way. It isn't very far.
+
+Happy 22nd Birthday, Chaddi.`;

@@ -1617,3 +1617,105 @@ body:has(.music-dock) #content {
     transform: rotate(45deg);
   }
 }
+
+/* ---------------------------------------------------------------- */
+/* Birthday letter: the cover opens, then a pencil writes it out      */
+/* ---------------------------------------------------------------- */
+
+.letter-sheet {
+  perspective: 1600px;
+  transform: rotate(-1deg);
+}
+
+/* A tilted sheet this tall pushes past a phone's width, so it sits straight
+   on small screens. */
+@media (max-width: 700px) {
+  .letter-sheet { transform: none; }
+}
+
+/* Handwriting rather than typewriter, since a pencil is doing the work. */
+.notebook-body.is-hand {
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  line-height: 1.95rem;
+  letter-spacing: 0.01em;
+  color: #46352a;
+}
+
+.letter-cover {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transition:
+    transform 1.15s cubic-bezier(0.3, 0.9, 0.2, 1),
+    opacity 0.35s ease 0.8s;
+}
+
+.letter-sheet.is-open .letter-cover {
+  transform: rotateY(-168deg);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.letter-cover-plate {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 2px;
+  background:
+    repeating-linear-gradient(
+      -38deg,
+      rgba(255, 255, 255, 0.05) 0 3px,
+      transparent 3px 7px
+    ),
+    linear-gradient(135deg, #9c5f54 0%, #8a5147 55%, #7d473e 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(62, 44, 34, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 18px 38px rgba(80, 52, 32, 0.2);
+}
+
+.letter-cover-label {
+  font-family: var(--font-hand);
+  font-size: 2.4rem;
+  color: #f2d9a5;
+  opacity: 0.92;
+  transform: rotate(-1.5deg);
+}
+
+/* The write head sits inline, so the pencil follows the text for free. */
+.letter-writehead {
+  display: inline-block;
+  width: 0;
+  white-space: nowrap;
+}
+
+.letter-pencil {
+  display: inline-block;
+  width: 1.7em;
+  height: 1.7em;
+  margin-left: -0.08em;
+  margin-bottom: -0.62em;
+  animation: letter-write 0.5s ease-in-out infinite;
+}
+
+.letter-pencil svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 2px rgba(62, 44, 34, 0.18));
+}
+
+@keyframes letter-write {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(0.5px, -0.8px) rotate(-1.6deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .letter-cover { display: none; }
+  .letter-pencil { animation: none; }
+}
