@@ -1,0 +1,524 @@
+/**
+ * Memory Lane — a journal of 22 chapters.
+ *
+ * Parchment and warm brown, on the site's existing tokens. Motion is
+ * transform and opacity only, and the whole file falls back to a plain,
+ * fully readable page under `prefers-reduced-motion`.
+ */
+
+.mem-page {
+  position: relative;
+  width: 100%;
+  overflow-x: clip;
+  padding-bottom: 3rem;
+  --mem-edge: rgba(62, 44, 34, 0.14);
+  --mem-parchment: #f8f0e1;
+}
+
+:root.dark .mem-page {
+  --mem-edge: rgba(246, 239, 230, 0.16);
+  --mem-parchment: #241d17;
+}
+
+/* ---------------------------------------------------------------- */
+/* Drifting dust                                                      */
+/* ---------------------------------------------------------------- */
+
+.mem-dust {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.mem-dust span {
+  position: absolute;
+  bottom: -10px;
+  border-radius: 50%;
+  background: rgba(240, 193, 75, 0.75);
+  box-shadow: 0 0 8px rgba(240, 193, 75, 0.6);
+  opacity: 0;
+  animation-name: mem-rise;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes mem-rise {
+  0% { opacity: 0; transform: translateY(0) translateX(0); }
+  12% { opacity: 0.8; }
+  88% { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(-104vh) translateX(26px); }
+}
+
+/* ---------------------------------------------------------------- */
+/* Opening page                                                       */
+/* ---------------------------------------------------------------- */
+
+.mem-opening {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 44rem);
+  margin: 0 auto;
+  padding: 2.5rem 0 1rem;
+  text-align: center;
+}
+
+.mem-opening-book {
+  width: min(100%, 17rem);
+  margin: 0 auto 0.5rem;
+}
+
+.mem-book {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.mem-book-shadow { fill: rgba(62, 44, 34, 0.14); }
+
+.mem-book-cover {
+  transform-box: fill-box;
+  transform-origin: 0% 50%;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.mem-book.is-open .mem-book-cover {
+  transform: perspective(900px) rotateY(-158deg);
+}
+
+.mem-book-pages { opacity: 0; transition: opacity 0.5s ease 0.3s; }
+.mem-book.is-open .mem-book-pages { opacity: 1; }
+.mem-book.is-shut .mem-book-pages { opacity: 0; }
+
+.mem-book-heart {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: mem-beat 3.4s ease-in-out infinite 1s;
+}
+
+@keyframes mem-beat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.09); }
+}
+
+.mem-opening-title {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-hand);
+  font-size: clamp(2.8rem, 9vw, 4.4rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.mem-opening-blurb {
+  margin: 1rem auto 0;
+  max-width: 34rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 2.6vw, 1.25rem);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.mem-cta {
+  margin-top: 1.5rem;
+  border: 1.5px solid var(--sun-deep);
+  border-radius: 999px;
+  background: var(--paper);
+  padding: 0.65rem 1.6rem;
+  min-height: 44px;
+  font-family: var(--font-hand);
+  font-size: 1.7rem;
+  line-height: 1;
+  color: var(--paper-ink);
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(80, 52, 32, 0.14);
+  transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.mem-cta:hover {
+  transform: translateY(-2px);
+  background: var(--sun);
+  box-shadow: 0 14px 28px rgba(80, 52, 32, 0.2);
+}
+
+.mem-cta.is-quiet {
+  font-size: 1.4rem;
+  background: transparent;
+  border-color: var(--mem-edge);
+  box-shadow: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* The thread of chapters                                             */
+/* ---------------------------------------------------------------- */
+
+.mem-chapters {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 62rem);
+  margin: 2.5rem auto 0;
+  scroll-margin-top: 5rem;
+}
+
+.mem-thread-wrap { position: relative; }
+
+.mem-thread {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0.78rem;
+  width: 2px;
+  background: var(--mem-edge);
+}
+
+.mem-thread-fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--sun-deep);
+  opacity: 0.55;
+  transform-origin: top;
+}
+
+.mem-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.mem-chapter {
+  position: relative;
+  padding: 0 0 3rem 2.6rem;
+}
+
+.mem-chapter-dot {
+  position: absolute;
+  top: 0.45rem;
+  left: 0.25rem;
+  width: 1.1rem;
+  height: 1.1rem;
+  border-radius: 50%;
+  border: 2px solid var(--paper);
+  background: var(--sun);
+  box-shadow: 0 0 0 1px var(--mem-edge);
+}
+
+.mem-chapter-num {
+  margin: 0 0 0.5rem;
+  font-family: var(--font-type);
+  font-size: 0.74rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--sun-deep);
+}
+
+.mem-chapter-emoji { letter-spacing: normal; }
+
+.mem-frame-wrap { width: min(100%, 17rem); }
+
+/* The polaroid itself is the button, so the whole photo is the target. */
+.mem-frame {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  border: 0;
+  padding: 0.6rem 0.6rem 0.5rem;
+  background: var(--paper);
+  cursor: pointer;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 14px 30px rgba(80, 52, 32, 0.13);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.mem-frame img,
+.mem-frame .mem-blank {
+  display: block;
+  width: 100%;
+  height: auto;
+  background: #f1e7d9;
+  object-fit: cover;
+}
+
+.mem-frame-title {
+  display: block;
+  padding: 0.45rem 0.2rem 0.1rem;
+  font-family: var(--font-hand);
+  font-size: 1.5rem;
+  line-height: 1.05;
+  color: var(--paper-ink);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.mem-chapter-caption {
+  margin: 0.7rem 0 0;
+  max-width: 22rem;
+  font-family: var(--font-serif);
+  font-size: 1.08rem;
+  font-style: italic;
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* A missing photo reads as an empty page, never a broken image. */
+.mem-blank {
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 1.4rem,
+      rgba(62, 44, 34, 0.08) 1.4rem 1.45rem
+    ),
+    #f6eee1;
+  font-family: var(--font-hand);
+  font-size: 1.2rem;
+  color: var(--paper-muted);
+  text-align: center;
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .mem-frame:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.8) inset,
+      0 18px 34px rgba(80, 52, 32, 0.2),
+      0 0 0 6px rgba(240, 193, 75, 0.22);
+  }
+}
+
+/* ---------------------------------------------------------------- */
+/* Viewer                                                             */
+/* ---------------------------------------------------------------- */
+
+.mem-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(32, 23, 18, 0.72);
+  backdrop-filter: blur(3px);
+}
+
+.mem-lightbox-page {
+  position: relative;
+  width: min(100%, 34rem);
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 1rem 1rem 0.75rem;
+  background: var(--paper);
+  border-radius: 10px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+}
+
+.mem-lightbox-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 250, 243, 0.9);
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--paper-ink);
+  cursor: pointer;
+}
+
+.mem-lightbox-figure { margin: 0; }
+
+.mem-lightbox-figure img,
+.mem-lightbox-figure .mem-blank {
+  display: block;
+  width: 100%;
+  max-height: 64vh;
+  object-fit: contain;
+  background: #f1e7d9;
+}
+
+.mem-lightbox-chapter {
+  margin: 0.7rem 0 0;
+  font-family: var(--font-type);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--paper-muted);
+}
+
+.mem-lightbox-title {
+  margin: 0.2rem 0 0;
+  font-family: var(--font-hand);
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--paper-ink);
+}
+
+.mem-lightbox-caption {
+  margin: 0.35rem 0 0;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--paper-muted);
+}
+
+.mem-lightbox-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
+  border-top: 1px dashed var(--mem-edge);
+}
+
+.mem-lightbox-nav button {
+  min-height: 44px;
+  padding: 0 0.9rem;
+  border: 1px solid var(--mem-edge);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-hand);
+  font-size: 1.3rem;
+  color: var(--paper-ink);
+  cursor: pointer;
+}
+
+.mem-lightbox-nav button:disabled { opacity: 0.35; cursor: default; }
+
+.mem-lightbox-nav p {
+  margin: 0;
+  font-family: var(--font-type);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  color: var(--paper-muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Closing page                                                       */
+/* ---------------------------------------------------------------- */
+
+.mem-closing {
+  position: relative;
+  z-index: 1;
+  width: min(100% - 2rem, 40rem);
+  margin: 1rem auto 0;
+  padding: 2rem 0 1rem;
+  text-align: center;
+}
+
+.mem-closing .mem-book { width: min(100%, 12rem); margin: 0 auto; }
+
+.mem-closing-title {
+  margin: 0.8rem 0 0;
+  font-family: var(--font-hand);
+  font-size: clamp(2.2rem, 7vw, 3.2rem);
+  line-height: 1.05;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.mem-closing-blurb {
+  margin: 0.9rem auto 0;
+  max-width: 32rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.02rem, 2.4vw, 1.18rem);
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.mem-closing-row {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.2rem;
+}
+
+.mem-bookmark {
+  width: 2.6rem;
+  height: auto;
+  animation: mem-swing 5s ease-in-out infinite;
+  transform-origin: 50% 0%;
+}
+
+@keyframes mem-swing {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+/* ---------------------------------------------------------------- */
+/* Desktop: the thread runs down the middle, chapters alternate       */
+/* ---------------------------------------------------------------- */
+
+@media (min-width: 820px) {
+  .mem-thread { left: 50%; transform: translateX(-50%); }
+
+  .mem-chapter {
+    display: flex;
+    width: 50%;
+    padding: 0 0 3.5rem;
+  }
+
+  .mem-chapter.is-left {
+    margin-right: 50%;
+    justify-content: flex-end;
+    padding-right: 3rem;
+    text-align: right;
+  }
+
+  .mem-chapter.is-right {
+    margin-left: 50%;
+    padding-left: 3rem;
+  }
+
+  .mem-chapter-dot { top: 0.3rem; left: auto; }
+  .mem-chapter.is-left .mem-chapter-dot { right: -0.57rem; }
+  .mem-chapter.is-right .mem-chapter-dot { left: -0.53rem; }
+
+  .mem-chapter.is-left .mem-frame-wrap,
+  .mem-chapter.is-left .mem-chapter-caption { margin-left: auto; }
+
+  .mem-frame-wrap { width: min(100%, 19rem); }
+}
+
+/* ---------------------------------------------------------------- */
+/* Reduced motion                                                     */
+/* ---------------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .mem-page *,
+  .mem-page *::before,
+  .mem-page *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .mem-dust { display: none; }
+
+  /* The cover never swings, so the pages must not depend on it. */
+  .mem-book-cover { transform: none; }
+  .mem-book-pages { opacity: 0; }
+}
