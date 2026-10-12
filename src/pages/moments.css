@@ -372,3 +372,28 @@
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(3px); }
 }
+
+/* The last words on the page, after all twenty-two. */
+.moments-close-note {
+  width: min(100% - 2rem, 36rem);
+  margin: 0.5rem auto 3.5rem;
+  text-align: center;
+}
+
+.moments-close-line {
+  margin: 0;
+  font-family: var(--font-hand);
+  font-size: clamp(1.9rem, 5.5vw, 2.6rem);
+  line-height: 1.15;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.moments-close-small {
+  margin: 0.55rem 0 0;
+  font-family: var(--font-serif);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--muted);
+  opacity: 0.75;
+}

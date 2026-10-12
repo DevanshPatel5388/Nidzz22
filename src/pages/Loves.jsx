@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { moments, momentsIntro } from "../data/moments";
+import { moments, momentsClosing, momentsIntro } from "../data/moments";
 import "./moments.css";
 
 const momentFiles = import.meta.glob(
@@ -204,6 +204,17 @@ export default function Loves() {
           );
         })}
       </section>
+
+      <motion.footer
+        className="moments-close-note"
+        initial={reduce ? false : { opacity: 0, y: 14 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "0px 0px -40px" }}
+        transition={{ duration: reduce ? 0 : 0.6 }}
+      >
+        <p className="moments-close-line">{momentsClosing.line}</p>
+        <p className="moments-close-small">{momentsClosing.note}</p>
+      </motion.footer>
 
       <MomentLightbox
         moment={open}
