@@ -17,7 +17,7 @@ export const pages = [
   { to: "/home", label: "Home", title: "22 Reasons" },
   { to: "/about", label: "About Her", title: "About Her" },
   { to: "/memories", label: "Memory Lane", title: "Memory Lane" },
-  { to: "/loves", label: "Things She Loves", title: "Things She Loves" },
+  { to: "/loves", label: "Little Moments, Forever Us", title: "Little Moments, Forever Us" },
   { to: "/architecture", label: "Architecture World", title: "Architecture World" },
   { to: "/letter", label: "Birthday Letter", title: "Birthday Letter" },
   { to: "/future", label: "Future Adventures", title: "Future Adventures" },
