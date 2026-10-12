@@ -49,6 +49,9 @@
 
 .moments-board {
   display: grid;
+  /* Cards differ in height by how many columns they span; let each sit at
+     its own height rather than stretching to the tallest in its row. */
+  align-items: start;
   grid-template-columns: 1fr;
   gap: 1.35rem;
   max-width: 68rem;
@@ -110,19 +113,35 @@
   color: var(--paper-muted);
 }
 
-.moment-card.is-portrait .moment-frame { aspect-ratio: 4 / 5; }
-.moment-card.is-featured .moment-frame { aspect-ratio: 4 / 5; }
+/* 2:3 suits both shapes in the set (9:16 and 3:4), so the whole photograph
+   fits inside with only a thin margin of paper either side. */
+.moment-card.is-portrait .moment-frame,
+.moment-card.is-featured .moment-frame,
+.moment-card.is-small .moment-frame { aspect-ratio: 2 / 3; }
+
+/* Kept for any landscape photograph added later. */
 .moment-card.is-landscape .moment-frame,
 .moment-card.is-wide .moment-frame { aspect-ratio: 3 / 2; }
-.moment-card.is-small .moment-frame { aspect-ratio: 1 / 1; }
 
 .moment-frame img {
+  display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  /* The frame is `place-items: center`, which left the image at its own
+     intrinsic height — taller than the frame, so `overflow: hidden` cut the
+     top and bottom off. Stretching it to the frame lets object-fit do the
+     work, and `contain` keeps the whole photograph. */
+  align-self: stretch;
+  justify-self: stretch;
+  /* A grid item's automatic minimum size is its content size, which for a
+     tall photograph beat height: 100% and pushed it past the frame. */
+  min-width: 0;
+  min-height: 0;
+  object-fit: contain;
 }
 
 .moment-empty {
+  min-height: 16rem;
   display: grid;
   justify-items: center;
   gap: 0.35rem;
@@ -309,7 +328,7 @@
     padding-inline: 1.5rem;
   }
 
-  .moment-card.is-featured { grid-column: span 4; }
+  .moment-card.is-featured { grid-column: span 3; }
   .moment-card.is-portrait { grid-column: span 2; }
   .moment-card.is-small { grid-column: span 2; }
   .moment-card.is-landscape { grid-column: span 3; }
