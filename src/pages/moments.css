@@ -111,7 +111,7 @@
 }
 
 .moment-card.is-portrait .moment-frame { aspect-ratio: 4 / 5; }
-.moment-card.is-featured .moment-frame { aspect-ratio: 5 / 4; }
+.moment-card.is-featured .moment-frame { aspect-ratio: 4 / 5; }
 .moment-card.is-landscape .moment-frame,
 .moment-card.is-wide .moment-frame { aspect-ratio: 3 / 2; }
 .moment-card.is-small .moment-frame { aspect-ratio: 1 / 1; }
