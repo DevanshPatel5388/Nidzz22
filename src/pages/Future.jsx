@@ -111,7 +111,6 @@ export default function Future() {
   const titleId = useId();
   const dateRef = useRef(null);
   const dialogRef = useRef(null);
-  const [pinned, setPinned] = useState(() => new Set());
   const [plans, setPlans] = useState(readPlans);
   const [openId, setOpenId] = useState(null);
   const [draftDate, setDraftDate] = useState("");
@@ -164,15 +163,6 @@ export default function Future() {
     };
   }, [openId]);
 
-  function toggle(title) {
-    setPinned((current) => {
-      const next = new Set(current);
-      if (next.has(title)) next.delete(title);
-      else next.add(title);
-      return next;
-    });
-  }
-
   function openPlan(dream) {
     const saved = plans[dream.id];
     setDraftDate(saved?.date || "");
@@ -217,76 +207,20 @@ export default function Future() {
         <PageHeader
           kicker="unwritten"
           title="Future Adventures"
-          subtitle="A wall of things worth looking forward to. Tap a card to pin it, or plan one of the new days."
+          subtitle="A wall of things worth looking forward to. Pick a day, and leave a little note."
         />
       </div>
 
       <section className="cork mx-4 mt-6 rounded-[2rem] px-4 py-10 sm:mx-6 sm:px-8">
         <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {dreams.map((dream, index) => {
-            if (dream.plan) {
-              const saved = plans[dream.id];
-              const Art = artFor[dream.id];
-              return (
-                <motion.article
-                  key={dream.id}
-                  className="scrap relative rounded-[1.2rem] px-5 pb-5 pt-7"
-                  style={{ transform: `rotate(${dream.rotate}deg)` }}
-                  initial={reduce ? false : { opacity: 0, y: 12 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: reduce ? 0 : (index % 3) * 0.05 }}
-                >
-                  <span
-                    className="absolute left-1/2 top-0 h-4 w-10 -translate-x-1/2 -translate-y-1/2 rotate-[-4deg] rounded-sm opacity-80"
-                    style={{ background: dream.pin }}
-                  />
-                  <Art />
-                  <h2 className="mt-1 font-hand text-4xl leading-none">{dream.title}</h2>
-                  <p className="mt-2 font-serif text-lg leading-snug text-paper-muted">{dream.line}</p>
-                  <p className="mt-2 font-hand text-2xl leading-tight text-[#c8922a]">{dream.caption}</p>
-                  {saved ? (
-                    <div className="mt-3">
-                      <p className="font-serif text-lg text-paper-ink">Planned for: {prettyDate(saved.date)}</p>
-                      {saved.note ? <p className="mt-1 font-serif text-lg italic text-paper-muted">“{saved.note}”</p> : null}
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <button type="button" className="future-btn" onClick={() => openPlan(dream)}>
-                          Edit the plan
-                        </button>
-                        {confirmId === dream.id ? (
-                          <>
-                            <button type="button" className="future-btn" onClick={() => clearPlan(dream.id)}>
-                              Yes, clear it
-                            </button>
-                            <button type="button" className="future-btn future-btn-quiet" onClick={() => setConfirmId(null)}>
-                              Keep it
-                            </button>
-                          </>
-                        ) : (
-                          <button type="button" className="future-btn future-btn-quiet" onClick={() => setConfirmId(dream.id)}>
-                            Clear the plan
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  ) : (
-                    <button type="button" className="future-btn mt-3" onClick={() => openPlan(dream)}>
-                      Plan this day
-                    </button>
-                  )}
-                </motion.article>
-              );
-            }
-
-            const on = pinned.has(dream.title);
+            const saved = plans[dream.id];
+            const Art = artFor[dream.id];
             return (
-              <motion.button
-                key={dream.title}
-                type="button"
-                onClick={() => toggle(dream.title)}
-                aria-pressed={on}
-                className="scrap relative rounded-[1.2rem] px-5 pb-5 pt-7 text-left"
-                style={{ transform: `rotate(${on ? 0 : dream.rotate}deg)` }}
+              <motion.article
+                key={dream.id}
+                className="scrap relative rounded-[1.2rem] px-5 pb-5 pt-7"
+                style={{ transform: `rotate(${dream.rotate}deg)` }}
                 initial={reduce ? false : { opacity: 0, y: 12 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -296,11 +230,40 @@ export default function Future() {
                   className="absolute left-1/2 top-0 h-4 w-10 -translate-x-1/2 -translate-y-1/2 rotate-[-4deg] rounded-sm opacity-80"
                   style={{ background: dream.pin }}
                 />
-                <span className="text-3xl" aria-hidden="true">{dream.emoji}</span>
+                {Art ? <Art /> : <span className="text-3xl" aria-hidden="true">{dream.emoji}</span>}
                 <h2 className="mt-1 font-hand text-4xl leading-none">{dream.title}</h2>
                 <p className="mt-2 font-serif text-lg leading-snug text-paper-muted">{dream.line}</p>
-                <p className="mt-3 font-hand text-2xl text-[#c8922a]">{on ? "pinned" : "someday"}</p>
-              </motion.button>
+                {dream.caption ? <p className="mt-2 font-hand text-2xl leading-tight text-[#c8922a]">{dream.caption}</p> : null}
+                {saved ? (
+                  <div className="mt-3">
+                    <p className="font-serif text-lg text-paper-ink">Planned for: {prettyDate(saved.date)}</p>
+                    {saved.note ? <p className="mt-1 font-serif text-lg italic text-paper-muted">“{saved.note}”</p> : null}
+                    <div className="mt-3 flex flex-wrap gap-2">
+                      <button type="button" className="future-btn" onClick={() => openPlan(dream)}>
+                        Edit the plan
+                      </button>
+                      {confirmId === dream.id ? (
+                        <>
+                          <button type="button" className="future-btn" onClick={() => clearPlan(dream.id)}>
+                            Yes, clear it
+                          </button>
+                          <button type="button" className="future-btn future-btn-quiet" onClick={() => setConfirmId(null)}>
+                            Keep it
+                          </button>
+                        </>
+                      ) : (
+                        <button type="button" className="future-btn future-btn-quiet" onClick={() => setConfirmId(dream.id)}>
+                          Clear the plan
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ) : (
+                  <button type="button" className="future-btn mt-3" onClick={() => openPlan(dream)}>
+                    Plan this day
+                  </button>
+                )}
+              </motion.article>
             );
           })}
         </div>
