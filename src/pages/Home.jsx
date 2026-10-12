@@ -1,19 +1,31 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import { MiniMark } from "../components/illustrations";
-import { reasons } from "../data/content";
+import { pages, reasons } from "../data/content";
+
+const chapters = ["/memories", "/loves", "/architecture", "/letter"]
+  .map((to) => pages.find((page) => page.to === to))
+  .filter(Boolean);
 
 const washes = ["#fffaf3", "#fff6f3", "#fff8e8", "#f8f1e6"];
 const tilts = [-1.4, 1.1, -0.6, 1.3, -1, 0.8, -1.5, 1, -0.4, 1.2, -1.1, 0.7, -0.8, 1.4, -1.2, 0.5, -0.9, 1.1, -1.3, 0.6, -0.7, 1];
 
 export default function Home() {
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
+    <div className="mx-auto max-w-6xl overflow-x-clip px-4 pb-8 sm:px-6">
       <PageHeader
         kicker="volume 22"
         title="22 Reasons Why You're Amazing"
         subtitle="Twenty-two little truths. One for every year of you."
       />
+      <nav className="chapter-row" aria-label="Chapters">
+        {chapters.map((page) => (
+          <Link key={page.to} to={page.to} className="chapter-card scrap">
+            {page.label}
+          </Link>
+        ))}
+      </nav>
       <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {reasons.map((reason, index) => (
           <motion.article

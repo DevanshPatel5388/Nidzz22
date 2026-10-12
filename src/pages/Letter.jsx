@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useInView, useReducedMotion } from "framer-motion";
 import PageHeader from "../components/PageHeader";
 import { SleepingCat } from "../components/illustrations";
@@ -140,6 +141,11 @@ export default function Letter() {
       )}
 
       <SleepingCat className="mx-auto mt-2 h-24 w-auto" />
+      <p className="mt-4 text-center">
+        <Link to="/home" className="font-hand text-3xl text-ink underline decoration-[#e7d3bc] underline-offset-4">
+          Back to Home
+        </Link>
+      </p>
     </div>
   );
 }

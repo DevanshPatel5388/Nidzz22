@@ -138,6 +138,7 @@
   min-width: 0;
   min-height: 0;
   object-fit: contain;
+  background: #f3eadf;
 }
 
 .moment-empty {

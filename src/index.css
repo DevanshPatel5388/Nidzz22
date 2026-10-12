@@ -213,11 +213,44 @@ img {
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
 }
 
+.chapter-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  max-width: 64rem;
+  margin: 1.5rem auto 0;
+}
+
+.chapter-card {
+  display: flex;
+  align-items: center;
+  min-height: 3.25rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 1.1rem;
+  font-family: var(--font-hand);
+  font-size: 1.8rem;
+  line-height: 1.05;
+  color: var(--paper-ink);
+}
+
+.chapter-card:hover,
+.chapter-card:focus-visible {
+  background: #fff6e8;
+}
+
 .reason-card {
   position: relative;
   height: 100%;
   transform: rotate(var(--tilt));
   transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+}
+
+@media (min-width: 640px) {
+  .chapter-row { grid-template-columns: 1fr 1fr; }
+}
+
+@media (min-width: 1024px) {
+  .chapter-row { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 @media (hover: hover) {
